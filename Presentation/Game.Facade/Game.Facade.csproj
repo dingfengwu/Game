@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\Extensions\**" />
+    <EmbeddedResource Remove="Infrastructure\Extensions\**" />
+    <None Remove="Infrastructure\Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Infrastructure\Extensions\ApplicationBuilderExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\ServiceCollectionExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Redis" Version="0.3.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.1" />
+    <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.0.0-alpha7-142" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Game.Base\Game.Base.csproj" />
+    <ProjectReference Include="..\..\Libraries\Game.Data\Game.Data.csproj" />
+    <ProjectReference Include="..\..\Libraries\Game.Service\Game.Services.csproj" />
+  </ItemGroup>
+
+</Project>

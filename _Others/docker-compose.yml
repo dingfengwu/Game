@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  game.web:
+    image: game.web
+    build:
+      context: ./Game.Web
+      dockerfile: Dockerfile
