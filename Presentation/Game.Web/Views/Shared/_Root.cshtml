@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Root_Head";
+}
+@await Html.PartialAsync("_Notifications")
+@await Html.PartialAsync("_JavaScriptDisabledWarning")
+@await Html.PartialAsync("_OldInternetExplorerWarning")
+<div class="header-wapper">
+    @await Component.InvokeAsync("TopMenu")
+</div>
+<div class="content-wrapper" role="main">
+    @RenderBody()
+</div>
+<div id="pageFooter" class="footer-wrapper">
+    @await Component.InvokeAsync("Footer")
+</div>

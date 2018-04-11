@@ -17,6 +17,7 @@ namespace Game.Data.Mapping.Customers
         {
             builder.ToTable("Customer_CustomerRole_Mapping");
             builder.HasKey(t => new { t.CustomerId, t.CustomerRoleId });
+            builder.Ignore(t => t.Id);
 
             builder.HasOne(t => t.Customer).WithMany(t=>t.CustomerCustomerRoleMapping).HasForeignKey(t => t.CustomerId).OnDelete(DeleteBehavior.SetNull);
 

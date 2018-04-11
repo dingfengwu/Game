@@ -27,6 +27,10 @@ namespace Game.Web.Infrastructure
             routeBuilder.MapLocalizedRoute("HomePage", "",
 				new { controller = "Home", action = "Index" });
 
+            //赛事竞猜
+            routeBuilder.MapLocalizedRoute("MatchGuess", "",
+                new { controller = "Home", action = "Index" });
+
             //login
             routeBuilder.MapLocalizedRoute("Login", "login/",
 				new { controller = "Customer", action = "Login" });

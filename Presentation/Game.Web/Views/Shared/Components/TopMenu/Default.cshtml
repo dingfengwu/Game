@@ -1,0 +1,39 @@
+﻿@inject IWorkContext _workContext;
+
+@{ 
+    var action = Context.Request.Path.Value;
+    if (action.Equals(Url.RouteUrl("MatchGuessing"), StringComparison.InvariantCultureIgnoreCase))
+    {
+        action = "MatchGuessing";
+    }
+    else if (action.Equals(Url.RouteUrl("Lottery"), StringComparison.InvariantCultureIgnoreCase))
+    {
+        action = "Lottery";
+    }
+    else if (action.Equals(Url.RouteUrl("GroupBuying"), StringComparison.InvariantCultureIgnoreCase))
+    {
+        action = "GroupBuying";
+    }
+    else if (action.Equals(Url.RouteUrl("HomePage"), StringComparison.InvariantCultureIgnoreCase))
+    {
+        action = "HomePage";
+    }
+
+    var currentLanguage = _workContext.WorkingLanguage.LanguageCulture;
+    var languageLabel = currentLanguage == "zh-CN" ? "English" : "简体中文";
+}
+
+<div class="nav">
+    <div class="header-logo">@await Component.InvokeAsync("Logo")</div>
+    <div class="header-nav">
+        <ul class="top-menu">
+            <li class="@(action=="HomePage"?"active":"")"><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+            <li class="@(action=="MatchGuessing"?"active":"")"><a href="@Url.RouteUrl("MatchGuessing")">@T("MatchGuessing")</a></li>
+            <li class="@(action=="Lottery"?"active":"")"><a href="@Url.RouteUrl("Lottery")">@T("Lottery")</a></li>
+            <li class="@(action=="GroupBuying"?"active":"")"><a href="@Url.RouteUrl("GroupBuying")">@T("GroupBuying")</a></li>
+            <li><a href="@Url.Action("ChangeLanguage","User")">@languageLabel</a></li>
+        </ul>
+    </div>
+    <div class="header-rl">@await Component.InvokeAsync("SignUpOrIn")</div>
+</div>
+

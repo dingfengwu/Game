@@ -1,0 +1,65 @@
+﻿/*GLOBAL CSS*/
+html{
+    font-size:14px;
+}
+body {
+    background-image: url(/images/2018bg.jpg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-color: #000;
+}
+
+
+/*PARTS CSS*/
+.header-wapper {
+    width: 100%;
+    height: 5rem;
+    line-height: 5rem;
+    color: #ffd87c;
+    font-size: 1.3rem;
+    background-color: #000000;
+}
+    .header-wapper > .nav {
+        width: 990px;
+        height: inherit;
+        line-height: inherit;
+        margin: 0px auto;
+        vertical-align: middle;
+        overflow: visible;
+    }
+    .header-wapper>.nav>div{
+        height:inherit;
+        line-height:inherit;
+        float:left;
+        overflow:visible;
+    }
+.content-wrapper {
+    width: 990px;
+    min-height:800px;
+    margin: 0px auto;
+}
+.footer-wrapper {
+    width: 100%;
+    height:400px;
+    background-color: #252525;
+}
+.top-menu li{
+    float:left;
+    overflow:visible;
+    padding:0px 20px;
+}
+.user-icon{
+    display:block;
+    width:50px;
+    height:50px;
+    border-radius:30px;
+}
+.header-wapper > .nav > div.header-rl {
+    float: right;
+    margin-right: 10px;
+    margin-top:0.2em;
+}
+
+/*
+
+*/

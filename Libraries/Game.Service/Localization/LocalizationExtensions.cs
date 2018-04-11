@@ -1,7 +1,7 @@
-using Domain.Domain.Security;
 using Game.Base;
 using Game.Base.Configuration;
 using Game.Base.Domain.Localization;
+using Game.Base.Domain.Security;
 using Game.Base.Infrastructure;
 using Game.Data;
 using Game.Services.Configuration;

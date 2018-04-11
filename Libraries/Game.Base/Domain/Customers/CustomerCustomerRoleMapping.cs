@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Game.Base.Domain.Customers
 {
-    public class CustomerCustomerRoleMapping
+    public class CustomerCustomerRoleMapping:BaseEntity
     {
         public CustomerCustomerRoleMapping() { }
 
@@ -17,8 +17,8 @@ namespace Game.Base.Domain.Customers
 
         public int CustomerRoleId { get; set; }
 
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public CustomerRole CustomerRole { get; set; }
+        public virtual CustomerRole CustomerRole { get; set; }
     }
 }

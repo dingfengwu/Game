@@ -1,0 +1,13 @@
+﻿@model SignUpOrInModel
+
+@if (Model.RegisteredUser)
+{
+    <div style="height:inherit;"><a class="user-icon" target="_blank" href="@Url.Action("UserProfile","User",new { UserId=Model.UserId})" style="@("background-image:url("+(string.IsNullOrWhiteSpace(Model.UserIcon)?"/images/default-avatar.jpg":Model.UserIcon)+")")">&nbsp;</a></div>
+}
+else
+{
+    <div style="line-height:1.2em;padding-top:5px;">
+        <a style="float:left; text-align:center;" href="@Url.Action("SignUp","User",new { UserId=Model.UserId})"><img src="/images/sign-up.png" width="28" height="28" alt="@T("SignUp")" /><p>@T("SignUp")</p></a>
+        <a style="float:left;margin-left:50px;text-align:center;" href="@Url.Action("SignIn","User")"><img src="~/images/sign-in.png" width="28" height="28" alt="@T("SignIn")" /><p>@T("SignIn")</p></a>
+    </div>
+}

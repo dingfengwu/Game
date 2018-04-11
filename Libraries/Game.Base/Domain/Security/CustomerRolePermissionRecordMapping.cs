@@ -1,13 +1,17 @@
-﻿using Domain.Domain.Security;
-using Game.Base.Domain.Customers;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Game.Base.Domain.Customers;
 
 namespace Game.Base.Domain.Security
 {
     public class CustomerRolePermissionRecordMapping
     {
+        public CustomerRolePermissionRecordMapping() { }
+
+        public CustomerRolePermissionRecordMapping(int customerRoleId,int permissionRecordId)
+        {
+            this.CustomerRoleId = customerRoleId;
+            this.PermissionRecordId = permissionRecordId;
+        }
+
         public int CustomerRoleId { get; set; }
 
         public int PermissionRecordId { get; set; }

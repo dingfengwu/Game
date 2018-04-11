@@ -1,0 +1,15 @@
+﻿{
+  "short_name": "KKGAME",
+  "name": "KKGAME",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16",
+      "type": "image/icon"
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#000",
+  "Theme_color": "#536878",
+  "display": "standalone"
+}

@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using Domain.Domain.Security;
 using Game.Base.Domain.Security;
+using System.Collections.Generic;
 
 namespace Game.Base.Domain.Customers
 {

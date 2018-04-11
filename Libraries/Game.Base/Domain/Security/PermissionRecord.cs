@@ -1,9 +1,6 @@
-﻿using Game.Base;
-using Game.Base.Domain.Customers;
-using Game.Base.Domain.Security;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Domain.Domain.Security
+namespace Game.Base.Domain.Security
 {
     /// <summary>
     /// Represents a permission record
@@ -19,18 +16,18 @@ namespace Domain.Domain.Security
         /// Gets or sets the permission system name
         /// </summary>
         public string SystemName { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the permission category
         /// </summary>
         public string Category { get; set; }
 
-        
+
         private ICollection<CustomerRolePermissionRecordMapping> _customerRolePermissionRecordMapping;
         public virtual ICollection<CustomerRolePermissionRecordMapping> CustomerRolePermissionRecordMapping
         {
             get { return _customerRolePermissionRecordMapping ?? (_customerRolePermissionRecordMapping = new List<CustomerRolePermissionRecordMapping>()); }
             protected set { _customerRolePermissionRecordMapping = value; }
-        }   
+        }
     }
 }

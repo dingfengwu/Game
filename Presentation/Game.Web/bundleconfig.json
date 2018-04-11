@@ -2,16 +2,24 @@
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
   {
-    "outputFileName": "wwwroot/css/site.min.css",
+    "outputFileName": "themes/defaultclean/content/css/custom.min.css",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
-      "wwwroot/css/site.css"
+      "themes/defaultclean/content/css/styles.css",
+      "themes/defaultclean/content/css/custom.css"
     ]
   },
+  //{
+  //  "outputFileName": "themes/defaultclean/content/css/styles.min.css",
+  //  // An array of relative input file paths. Globbing patterns supported
+  //  "inputFiles": [
+  //    "themes/defaultclean/content/css/styles.css"
+  //  ]
+  //},
   {
-    "outputFileName": "wwwroot/js/site.min.js",
+    "outputFileName": "wwwroot/js/public.common.min.js",
     "inputFiles": [
-      "wwwroot/js/site.js"
+      "wwwroot/js/public.common.js"
     ],
     // Optionally specify minification options
     "minify": {

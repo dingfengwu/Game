@@ -210,6 +210,35 @@ PRIMARY KEY CLUSTERED
 ) ON [PRIMARY]
 GO
 
+CREATE TABLE [dbo].[UrlRecord](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[EntityId] [int] NOT NULL,
+	[EntityName] [nvarchar](400) NOT NULL,
+	[Slug] [nvarchar](400) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[LanguageId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ALTER TABLE [dbo].[CustomerPassword]  WITH CHECK ADD  CONSTRAINT [CustomerPassword_Customer] FOREIGN KEY([CustomerId])
 REFERENCES [dbo].[Customer] ([Id])

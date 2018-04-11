@@ -157,3 +157,32 @@ function addAntiForgeryToken(data) {
     }
     return data;
 };
+
+
+//scroll to top
+(function ($) {
+    $.fn.backTop = function () {
+        var backBtn = this;
+
+        var position = 100;
+        var speed = 900;
+        var bottom = 400;
+
+        $(document).scroll(function () {
+            var pos = $(window).scrollTop();
+            var docHeight = $(document).height();
+            var winHeight = window.innerHeight;
+            var bottomLess = docHeight - winHeight - pos;
+
+            if (pos >= position && bottomLess > bottom) {
+                backBtn.fadeIn();
+            } else {
+                backBtn.fadeOut();
+            }
+        });
+
+        backBtn.click(function () {
+            $("html, body").animate({ scrollTop: 0 }, speed);
+        });
+    }
+}(jQuery));

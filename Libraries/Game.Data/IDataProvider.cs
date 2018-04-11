@@ -38,7 +38,7 @@ namespace Game.Data
         int SupportedLengthOfBinaryHash();
 
         /// <summary>
-        /// 数据库相关配置，包括连接字符串，提供程序
+        /// 配置dbcontext对象
         /// </summary>
         /// <param name="optionBuilder"></param>
         void Build(DbContextOptionsBuilder optionBuilder);

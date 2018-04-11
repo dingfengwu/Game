@@ -7,7 +7,7 @@ namespace Game.Data
     /// <summary>
     /// Extensions
     /// </summary>
-    public static class Extensions
+    public static class DataEntityExtensions
     {
         /// <summary>
         /// Get unproxied entity type

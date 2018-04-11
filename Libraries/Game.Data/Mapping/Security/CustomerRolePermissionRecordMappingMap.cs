@@ -1,5 +1,4 @@
-﻿using Domain.Domain.Security;
-using Game.Base.Domain.Security;
+﻿using Game.Base.Domain.Security;
 using Microsoft.EntityFrameworkCore;
 
 namespace Game.Data.Mapping.Security

@@ -1,5 +1,5 @@
 {
   "DataProvider": "sqlserver",
-  "DataConnectionString": "Data Source=(local);Initial Catalog=game;Integrated Security=True;Persist Security Info=False",
+  "DataConnectionString": "Data Source=(local);Initial Catalog=game;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=123456",
   "RawDataSettings": {}
 }

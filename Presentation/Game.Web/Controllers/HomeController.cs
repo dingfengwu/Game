@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Game.Base.Domain.Matches;
 using Game.Facade.Controllers;
+using Game.Web.Models.Matches;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Game.Web.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : BasePublicController
     {
         public IActionResult Index()
         {
-            return View();
-            
+            return RedirectToAction("Index", "Match");
         }
 
         public IActionResult About()

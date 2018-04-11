@@ -1,4 +1,3 @@
-using Domain.Domain.Security;
 using Game.Base.Domain.Security;
 using Microsoft.EntityFrameworkCore;
 

@@ -19,7 +19,7 @@ namespace Game.Face.Infrastructure
         public void ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
         {
             //add MiniProfiler services
-            services.AddMiniProfiler();
+            //services.AddMiniProfiler();
 
             //add and configure MVC feature
             services.AddGameMvc();
@@ -32,7 +32,7 @@ namespace Game.Face.Infrastructure
         public void Configure(IApplicationBuilder application)
         {
             //add MiniProfiler
-            application.UseMiniProfiler();
+            //application.UseMiniProfiler();
 
             //MVC routing
             application.UseGameMvc();

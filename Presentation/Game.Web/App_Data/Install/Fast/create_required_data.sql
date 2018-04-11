@@ -67,6 +67,7 @@ GO
 SET IDENTITY_INSERT [dbo].[Language] ON 
 
 INSERT [dbo].[Language] ([Id], [Name], [LanguageCulture], [UniqueSeoCode], [FlagImageFileName], [Rtl], [LimitedToStores], [DefaultCurrencyId], [Published], [DisplayOrder]) VALUES (1, N'English', N'en-US', N'en', N'us.png', 0, 0, 0, 1, 1)
+INSERT [dbo].[Language] ([Name],LanguageCulture,UniqueSeoCode,FlagImageFileName,Rtl,LimitedToStores,DefaultCurrencyId,Published,DisplayOrder) VALUES('简体中文','zh-CN','cn','cn.png',0,0,0,1,2)
 SET IDENTITY_INSERT [dbo].[Language] OFF
 GO
 
@@ -100,6 +101,8 @@ INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (24, N'commonse
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (25, N'commonsettings.ignorelogwordlist', N'', 0)
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (26, N'commonsettings.bbcodeeditoropenlinksinnewwindow', N'False', 0)
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (27, N'commonsettings.popupfortermsofservicelinks', N'True', 0)
+INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (27, N'commonsettings.popupfortermsofservicelinks', N'True', 0)
+INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (27, N'commonsettings.displayeucookielawwarning', N'False', 0)
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (28, N'seosettings.pagetitleseparator', N'. ', 0)
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (29, N'seosettings.pagetitleseoadjustment', N'PagenameAfterStorename', 0)
 INSERT [dbo].[Setting] ([Id], [Name], [Value], [StoreId]) VALUES (30, N'seosettings.defaulttitle', N'Your store', 0)

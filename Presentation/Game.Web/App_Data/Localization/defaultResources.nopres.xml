@@ -14376,13 +14376,13 @@
   <LocaleResource Name="Enums.Game.Services.Payments.RecurringPaymentType.NotSupported">
     <Value>Not supported</Value>
   </LocaleResource>
-  <LocaleResource Name="Enums.Game.Web.Framework.Security.Captcha.ReCaptchaVersion.Version1">
+  <LocaleResource Name="Enums.Game.Facade.Security.Captcha.ReCaptchaVersion.Version1">
     <Value>Version 1.0</Value>
   </LocaleResource>
-  <LocaleResource Name="Enums.Game.Web.Framework.Security.Captcha.ReCaptchaVersion.Version2">
+  <LocaleResource Name="Enums.Game.Facade.Security.Captcha.ReCaptchaVersion.Version2">
     <Value>Version 2.0</Value>
   </LocaleResource>
-  <LocaleResource Name="Game.Web.Framework.Validators.MaxDecimal">
+  <LocaleResource Name="Game.Facade.Validators.MaxDecimal">
     <Value>The value is out of range. Maximum value is {0}.99</Value>
   </LocaleResource>  
   <LocaleResource Name="EUCookieLaw.CannotBrowse">

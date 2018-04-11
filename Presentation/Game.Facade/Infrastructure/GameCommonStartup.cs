@@ -5,6 +5,7 @@ using Game.Facade.Compression;
 using Game.Face.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,10 @@ namespace Game.Face.Infrastructure
         public void ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
         {
             //compression
-            services.AddResponseCompression();
+            services.AddResponseCompression(options=> {
+                options.EnableForHttps = true;
+                options.MimeTypes= ResponseCompressionDefaults.MimeTypes.Concat(new [] { "image/png", "image/jpeg", "image/gif", "image/x-icon" });
+            });
 
             //add options feature
             services.AddOptions();
@@ -48,6 +52,9 @@ namespace Game.Face.Infrastructure
             //add localization
             services.AddLocalization();
 
+            //add theme support
+            services.AddThemes();
+
             //add gif resizing support
             //new PrettyGifs().Install(Config.Current);
         }
@@ -65,8 +72,9 @@ namespace Game.Face.Infrastructure
             {
                 //gzip by default
                 application.UseResponseCompression();
-                //workaround with "vary" header
-                application.UseMiddleware<ResponseCompressionVaryWorkaroundMiddleware>();
+
+                //workaround with "vary" header,use only on 1.x
+                //application.UseMiddleware<ResponseCompressionVaryWorkaroundMiddleware>();
             }
 
             //static files
@@ -79,6 +87,15 @@ namespace Game.Face.Infrastructure
                         ctx.Context.Response.Headers.Append(HeaderNames.CacheControl, gameConfig.StaticFilesCacheControl);
                 }
             });
+
+            //add jpf
+            var newMimeProvider = new FileExtensionContentTypeProvider();
+            newMimeProvider.Mappings[".jpf"] = "image/jp2";
+            application.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = newMimeProvider
+            });
+
             //themes
             application.UseStaticFiles(new StaticFileOptions
             {

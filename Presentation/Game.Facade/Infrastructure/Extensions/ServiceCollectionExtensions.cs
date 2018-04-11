@@ -6,11 +6,13 @@ using Game.Base.Data;
 using Game.Base.Infrastructure;
 using Game.Facade.FluentValidation;
 using Game.Facade.Mvc.ModelBinding;
+using Game.Facade.Themes;
 using Game.Services.Authentication;
 using Game.Services.Logging;
 using Game.Services.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
@@ -147,6 +149,22 @@ namespace Game.Face.Infrastructure.Extensions
                 //configure the data protection system to persist keys to the specified directory
                 services.AddDataProtection().PersistKeysToFileSystem(dataProtectionKeysFolder);
             }
+        }
+
+        /// <summary>
+        /// Adds services required for themes support
+        /// </summary>
+        /// <param name="services">Collection of service descriptors</param>
+        public static void AddThemes(this IServiceCollection services)
+        {
+            if (!DataSettingsHelper.DatabaseIsInstalled())
+                return;
+
+            //themes support
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.ViewLocationExpanders.Add(new ThemeableViewLocationExpander());
+            });
         }
 
         /// <summary>

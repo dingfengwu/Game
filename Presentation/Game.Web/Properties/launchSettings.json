@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:31388/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost",
+      "sslPort": 443
     }
   },
   "profiles": {
@@ -13,7 +13,8 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "launchUrl": "https://localhost"
     },
     "Game.Web": {
       "commandName": "Project",
@@ -21,7 +22,8 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:31389"
+      "applicationUrl": "http://localhost",
+      "launchUrl": "https://localhost"
     }
   }
 }

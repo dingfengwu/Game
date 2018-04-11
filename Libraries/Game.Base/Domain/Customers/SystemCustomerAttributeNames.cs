@@ -182,5 +182,9 @@ namespace Game.Base.Domain.Customers
         /// EuCookieLawAccepted
         /// </summary>
         public static string EuCookieLawAccepted { get { return "EuCookieLaw.Accepted"; } }
+        /// <summary>
+        /// ÓÃ»§Í¼Ïñ
+        /// </summary>
+        public static string UserIcon { get { return "UserIcon"; } }
     }
 }

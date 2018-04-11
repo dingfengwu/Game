@@ -1,0 +1,69 @@
+﻿@using Game.Base.Domain
+@using StackExchange.Profiling
+@using Game.Base.Domain.Common
+@using Game.Base.Domain.Seo
+@using Game.Services.Events
+@using Game.Services.Security
+@using Game.Facade.Events
+@inject CommonSettings commonSettings
+@inject IEventPublisher eventPublisher
+@inject IPermissionService permissionService
+@inject SeoSettings seoSettings
+@inject GameConfig gameConfig
+@{
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/js/public.common.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery-migrate-1.2.1.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery-ui-1.10.3.custom.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery.validate.unobtrusive.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery.validate.min.js");
+    //jQuery is the only js file in the head. if we decide to move it to the footer, then ensure that all inline scripts (with jQuery usage) with are also moved to the footer
+    //the issue that it's not possible in some cases (e.g. "Edit address", when Ajax request is made on one-page checkout)
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/jquery/dist/jquery.min.js");
+    //Html.AppendScriptParts(ResourceLocation.Footer, "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js");
+    //X-UA-Compatible tag
+    if (commonSettings.RenderXuaCompatible)
+    {
+        Html.AppendHeadCustomParts($"<meta http-equiv=\"X-UA-Compatible\" content=\"{commonSettings.XuaCompatibleValue}\"/>");
+    }
+    //custom tag(s);
+    if (!string.IsNullOrEmpty(seoSettings.CustomHeadTags))
+    {
+        Html.AppendHeadCustomParts(seoSettings.CustomHeadTags);
+    }
+    var displayMiniProfiler = gameConfig.DisplayMiniProfiler
+        && (!gameConfig.DisplayMiniProfilerForAdminOnly || permissionService.Authorize(StandardPermissionProvider.AccessAdminPanel));
+    //event
+    eventPublisher.Publish(new PageRenderingEvent(this.Html));
+
+    var language = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage;
+}
+<!DOCTYPE html>
+<html @(this.ShouldUseRtlTheme() ? Html.Raw(" dir=\"rtl\"") : null) @Html.GamePageCssClasses() lang="@language.LanguageCulture">
+<head>
+    <title>@Html.GameTitle()</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta name="description" content="@(Html.GameMetaDescription())" />
+    <meta name="keywords" content="@(Html.GameMetaKeywords())" />
+    <meta name="generator" content="gameCommerce" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--<link rel="manifest" href="/manifest.json">-->
+    @Html.GameHeadCustom()
+    @await Html.PartialAsync("Head")
+    @Html.GameCssFiles(this.Url, ResourceLocation.Head)
+    @Html.GameScripts(this.Url, ResourceLocation.Head)
+    @Html.GameCanonicalUrls()
+    @await Component.InvokeAsync("Favicon")
+    @if (displayMiniProfiler)
+    {
+        <mini-profiler />
+    }
+    @Html.GameInlineScripts(this.Url, ResourceLocation.Head)
+</head>
+<body>
+    @RenderBody()
+    @Html.GameCssFiles(this.Url, ResourceLocation.Footer)
+    @Html.GameScripts(this.Url, ResourceLocation.Footer)
+    @Html.GameInlineScripts(this.Url, ResourceLocation.Footer)
+</body>
+@*<script async src="~/service-worker-startup.js"></script>*@
+</html>

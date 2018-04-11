@@ -1,6 +1,8 @@
 ﻿@using Game.Base
 @using Game.Services.Helpers
 @using Game.Facade.UI
+@using Game.Facade.Themes;
+
 @inject IWorkContext workContext
 @inject IThemeContext themeContext
 @inject IUserAgentHelper userAgentHelper
@@ -21,10 +23,12 @@
     }
     else
     {
-        Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles.css");
+        //Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/styles.min.css");
     }
+    //add custom css file
+    Html.AppendCssFileParts($"~/Themes/{themeName}/Content/css/custom.min.css");
     //add jQuery UI css file
-    Html.AppendCssFileParts("~/lib/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
+    //Html.AppendCssFileParts("~/lib/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css");
     //add browser specific JS files
     if (isIe8)
     {

@@ -16,7 +16,7 @@ namespace Game.Base
         /// <summary>
         /// Gets or sets current user working language
         /// </summary>
-        Language WorkingLanguage { get; }
+        Language WorkingLanguage { get; set; }
 
         /// <summary>
         /// Gets or sets value indicating whether we're in admin area

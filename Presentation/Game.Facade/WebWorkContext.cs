@@ -303,7 +303,7 @@ namespace Game.Face
                 if (customerLanguage == null)
                 {
                     //it not found, then try to get the default language for the current store (if specified)
-                    customerLanguage = allSupportedLanguages.FirstOrDefault();
+                    customerLanguage = allSupportedLanguages.FirstOrDefault(p=>p.LanguageCulture=="zh-CN");
                 }
 
                 //cache the found language

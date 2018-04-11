@@ -93,5 +93,15 @@ namespace Game.Base.Configuration
         /// Gets or sets a value indicating whether to load an assembly into the load-from context, bypassing some security checks.
         /// </summary>
         public bool UseUnsafeLoadAssembly { get; set; }
+
+        /// <summary>
+        /// 是否显示调试工具
+        /// </summary>
+        public bool DisplayMiniProfiler { get; set; }
+
+        /// <summary>
+        /// 是否只有管理成员才显示调试工具
+        /// </summary>
+        public bool DisplayMiniProfilerForAdminOnly { get; set; }
     }
 }

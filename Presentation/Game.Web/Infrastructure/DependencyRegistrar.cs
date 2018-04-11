@@ -2,6 +2,7 @@ using Autofac;
 using Game.Base.Configuration;
 using Game.Base.Infrastructure;
 using Game.Base.Infrastructure.DependencyManagement;
+using Game.Web.Factories;
 using Game.Web.Infrastructure.Installation;
 
 namespace Game.Web.Infrastructure
@@ -23,7 +24,7 @@ namespace Game.Web.Infrastructure
             builder.RegisterType<InstallationLocalizationService>().As<IInstallationLocalizationService>().InstancePerLifetimeScope();
 
             //factories
-            
+            builder.RegisterType<CommonModelFactory>().As<ICommonModelFactory>().InstancePerLifetimeScope();
         }
 
         /// <summary>

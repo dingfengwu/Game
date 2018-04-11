@@ -23,7 +23,47 @@ BEGIN
 END
 GO
 
-
+CREATE PROCEDURE [dbo].[DeleteGuests]
+(
+	@CreatedFromUtc datetime,
+	@CreatedToUtc datetime,
+	@TotalRecordsDeleted int = null OUTPUT
+)
+AS
+BEGIN
+	CREATE TABLE #tmp_guests (CustomerId int)
+		
+	INSERT #tmp_guests (CustomerId)
+	SELECT [Id] FROM [Customer] c with (NOLOCK)
+	WHERE
+	--created from
+	((@CreatedFromUtc is null) OR (c.[CreatedOnUtc] > @CreatedFromUtc))
+	AND
+	--created to
+	((@CreatedToUtc is null) OR (c.[CreatedOnUtc] < @CreatedToUtc))
+	AND
+	--guests only
+	(EXISTS(SELECT 1 FROM [Customer_CustomerRole_Mapping] ccrm with (NOLOCK) inner join [Customer] with (NOLOCK) on ccrm.[CustomerId]=c.[Id] inner join [CustomerRole] cr with (NOLOCK) on cr.[Id]=ccrm.[CustomerRoleId] WHERE cr.[SystemName] = N'Guests'))
+	AND
+	--no system accounts
+	(c.IsSystemAccount = 0)
+	
+	--delete guests
+	DELETE [Customer]
+	WHERE [Id] IN (SELECT [CustomerId] FROM #tmp_guests)
+	
+	--delete attributes
+	DELETE [GenericAttribute]
+	WHERE ([EntityId] IN (SELECT [CustomerId] FROM #tmp_guests))
+	AND
+	([KeyGroup] = N'Customer')
+	
+	--total records
+	SELECT @TotalRecordsDeleted = COUNT(1) FROM #tmp_guests
+	
+	DROP TABLE #tmp_guests
+END
+GO
 
 CREATE FUNCTION [dbo].[game_getnotnullnotempty]
 (

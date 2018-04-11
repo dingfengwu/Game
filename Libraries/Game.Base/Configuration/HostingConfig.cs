@@ -1,3 +1,4 @@
+
 namespace Game.Base.Configuration
 {
     /// <summary>
@@ -19,5 +20,7 @@ namespace Game.Base.Configuration
         /// Gets or sets a value indicating whether to use HTTP_X_FORWARDED_PROTO
         /// </summary>
         public bool UseHttpXForwardedProto { get; set; }
+
+        public EndpointConfig[] Endpoints { get; set; }
     }
 }
