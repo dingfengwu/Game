@@ -62,6 +62,9 @@ namespace Game.Services.Authentication
             if (!string.IsNullOrEmpty(customer.Email))
                 claims.Add(new Claim(ClaimTypes.Email, customer.Email, ClaimValueTypes.Email, GameCookieAuthenticationDefaults.ClaimsIssuer));
 
+            if (!string.IsNullOrEmpty(customer.PhoneNumber))
+                claims.Add(new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber, ClaimValueTypes.String, GameCookieAuthenticationDefaults.ClaimsIssuer));
+
             //create principal for the current authentication scheme
             var userIdentity = new ClaimsIdentity(claims, GameCookieAuthenticationDefaults.AuthenticationScheme);
             var userPrincipal = new ClaimsPrincipal(userIdentity);
@@ -108,21 +111,31 @@ namespace Game.Services.Authentication
                 return null;
 
             Customer customer = null;
-            if (_customerSettings.UsernamesEnabled)
+            if (customer == null)
             {
                 //try to get customer by username
                 var usernameClaim = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Name
-                    && claim.Issuer.Equals(GameCookieAuthenticationDefaults.ClaimsIssuer, StringComparison.InvariantCultureIgnoreCase));
+                        && claim.Issuer.Equals(GameCookieAuthenticationDefaults.ClaimsIssuer, StringComparison.InvariantCultureIgnoreCase));
                 if (usernameClaim != null)
                     customer = _customerService.GetCustomerByUsername(usernameClaim.Value);
             }
-            else
+            
+            if (customer == null)
             {
                 //try to get customer by email
-                var emailClaim = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Email 
+                var emailClaim = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.Email
                     && claim.Issuer.Equals(GameCookieAuthenticationDefaults.ClaimsIssuer, StringComparison.InvariantCultureIgnoreCase));
                 if (emailClaim != null)
                     customer = _customerService.GetCustomerByEmail(emailClaim.Value);
+            }
+
+            if (customer == null)
+            {
+                //try to get customer by phone number
+                var phoneNumberClaim = authenticateResult.Principal.FindFirst(claim => claim.Type == ClaimTypes.MobilePhone
+                    && claim.Issuer.Equals(GameCookieAuthenticationDefaults.ClaimsIssuer, StringComparison.InvariantCultureIgnoreCase));
+                if (phoneNumberClaim != null)
+                    customer = _customerService.GetCustomerByPhoneNumber(phoneNumberClaim.Value);
             }
 
             //whether the found customer is available

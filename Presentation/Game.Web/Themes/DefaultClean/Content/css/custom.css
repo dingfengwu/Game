@@ -1,6 +1,6 @@
 ﻿/*GLOBAL CSS*/
 html{
-    font-size:14px;
+    font-size:16px;
 }
 body {
     background-image: url(/images/2018bg.jpg);
@@ -16,7 +16,7 @@ body {
     height: 5rem;
     line-height: 5rem;
     color: #ffd87c;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     background-color: #000000;
 }
     .header-wapper > .nav {
@@ -48,18 +48,16 @@ body {
     overflow:visible;
     padding:0px 20px;
 }
-.user-icon{
-    display:block;
-    width:50px;
-    height:50px;
-    border-radius:30px;
+.user-icon {
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+    background-repeat: no-repeat;
+    margin-top:1rem;
+    background-size:cover;
 }
 .header-wapper > .nav > div.header-rl {
     float: right;
     margin-right: 10px;
-    margin-top:0.2em;
 }
-
-/*
-
-*/

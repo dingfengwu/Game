@@ -162,8 +162,8 @@ namespace Game.WebControllers
         public virtual IActionResult InternalRedirect(string url, bool permanentRedirect)
         {
             //ensure it's invoked from our GenericPathRoute class
-            if (HttpContext.Items["nop.RedirectFromGenericPathRoute"] == null ||
-                !Convert.ToBoolean(HttpContext.Items["nop.RedirectFromGenericPathRoute"]))
+            if (HttpContext.Items["game.RedirectFromGenericPathRoute"] == null ||
+                !Convert.ToBoolean(HttpContext.Items["game.RedirectFromGenericPathRoute"]))
             {
                 url = Url.RouteUrl("HomePage");
                 permanentRedirect = false;

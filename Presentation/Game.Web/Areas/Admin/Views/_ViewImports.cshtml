@@ -1,0 +1,20 @@
+﻿@inherits Game.Facade.Mvc.Razor.GameRazorPage<TModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, Game.Facade
+
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Game.Base;
+@using Game.Base.Domain.Common
+@using Game.Base.Infrastructure
+@using Game.Services.Events
+@using Game.Web.Extensions
+@using Game.Facade
+@using Game.Facade.Events
+@using Game.Facade.Extensions
+@using Game.Facade.Security.Captcha
+@using Game.Facade.Security.Honeypot
+@using Game.Facade.Themes
+@using Game.Facade.UI
+@using Game.Web.Models.Matches;
+@using Game.Services.Helpers;
+@using Game.Services.Matches;

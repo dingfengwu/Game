@@ -217,7 +217,7 @@ namespace Game.Web.Infrastructure
 
             //register result page
             routeBuilder.MapLocalizedRoute("RegisterResult", "registerresult/{resultId:min(0)}",
-				new { controller = "Customer", action = "RegisterResult" });
+				new { controller = "Account", action = "RegisterResult",area="Admin" });
 
             //check username availability
             routeBuilder.MapLocalizedRoute("CheckUsernameAvailability", "customer/checkusernameavailability",

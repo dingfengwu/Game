@@ -1,0 +1,115 @@
+﻿
+@model IPagedList<MatchListItem>
+
+@inject IDateTimeHelper dateTimeHelper
+
+    <h4 class="c-grey-900 mT-10 mB-30">比赛列表</h4>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="bgc-white bd bdrs-3">
+                <h4 class="c-grey-900 mB-20 fa-pull-right"><a asp-controller="Match" asp-action="Edit" class="btn btn-primary">新增</a></h4>
+                <table id="matchDataTable" class="table table-striped table-bordered dataTable" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-sort="ascending" aria-label="Name: activate to sort column descending">
+                                赛事名称
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending">
+                                比赛时间
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Office: activate to sort column ascending" >
+                                主队 VS 客队
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Age: activate to sort column ascending" >
+                                对阵比分
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Start date: activate to sort column ascending" >
+                                对阵水位
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Salary: activate to sort column ascending" >
+                                操作
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-sort="ascending" aria-label="Name: activate to sort column descending" >
+                                赛事名称
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Position: activate to sort column ascending" >
+                                比赛时间
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Office: activate to sort column ascending" >
+                                主队 VS 客队
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Age: activate to sort column ascending" >
+                                对阵比分
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Start date: activate to sort column ascending" >
+                                对阵水位
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                                aria-label="Salary: activate to sort column ascending" >
+                                操作
+                            </th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                <tr role="row" class="odd">
+                    <td class="sorting_1"><img src="@item.GameIcon" width="25" height="25" class="m-r-5" />@item.MatchName</td>
+                    <td>@item.MatchTimeLocal.ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@(string.Format("{0} VS {1}", item.MasterTeam, item.SlaveTeam))</td>
+                    <td>@(string.Format("{0} VS {1}", Math.Round(item.MasterTeamScore,0), Math.Round(item.SlaveTeamScore)))</td>
+                    <td>@(string.Format("{0} VS {1}", item.MasterTeamRate, item.SlaveTeamRate))</td>
+                    <td><a asp-controller="Match" asp-action="Edit" asp-area="admin" asp-route-id="@item.MatchId"><i class="fa fa-pencil-alt"></i></a></td>
+                </tr>
+}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" asp-location="Footer">
+    $(function () {
+        $("#matchDataTable").DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
+    });
+</script>

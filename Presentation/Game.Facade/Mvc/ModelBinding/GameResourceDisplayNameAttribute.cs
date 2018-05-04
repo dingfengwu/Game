@@ -1,5 +1,6 @@
 ﻿using Game.Base;
 using Game.Base.Infrastructure;
+using Game.Services.Localization;
 using System.ComponentModel;
 
 namespace Game.Facade.Mvc.ModelBinding
@@ -42,8 +43,13 @@ namespace Game.Facade.Mvc.ModelBinding
         {
             get
             {
-                //待处理...
-                return "";
+                //get working language identifier
+                var workingLanguageId = EngineContext.Current.Resolve<IWorkContext>().WorkingLanguage.Id;
+
+                //get locale resource value
+                _resourceValue = EngineContext.Current.Resolve<ILocalizationService>().GetResource(ResourceKey, workingLanguageId, true, ResourceKey);
+
+                return _resourceValue;
             }
         }
 

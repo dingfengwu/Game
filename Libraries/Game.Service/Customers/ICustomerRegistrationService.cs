@@ -13,7 +13,7 @@ namespace Game.Services.Customers
         /// <param name="usernameOrEmail">Username or email</param>
         /// <param name="password">Password</param>
         /// <returns>Result</returns>
-        CustomerLoginResults ValidateCustomer(string usernameOrEmail, string password);
+        CustomerLoginResults ValidateCustomer(string usernameOrEmail, string password, out Customer outCustomer);
 
         /// <summary>
         /// Register customer
@@ -43,5 +43,7 @@ namespace Game.Services.Customers
         /// <param name="customer">Customer</param>
         /// <param name="newUsername">New Username</param>
         void SetUsername(Customer customer, string newUsername);
+
+       
     }
 }

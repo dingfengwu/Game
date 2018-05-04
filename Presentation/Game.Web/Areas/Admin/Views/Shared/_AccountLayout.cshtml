@@ -1,0 +1,88 @@
+﻿@inject IWebHelper webHelper
+@inject IWorkContext workContext
+@inject IDateTimeHelper dateTimeHelper
+@inject IPermissionService permissionService
+@inject IEventPublisher eventPublisher
+@inject IHttpContextAccessor httpContextAccessor
+@inject CommonSettings commonSettings
+@inject LocalizationSettings localizationSettings
+@inject IUserAgentHelper userAgentHelper
+
+@using System.Globalization
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Http
+@using Game.Base.Domain.Customers
+@using Game.Facade.UI;
+@using Game.Base;
+@using Game.Base.Domain
+@using Game.Base.Domain.Localization
+@using Game.Services.Common
+@using Game.Services.Customers
+@using Game.Services.Helpers
+@using Game.Services.Security;
+
+@{
+    //css
+    Html.AppendCssFileParts("~/css/admin/style.css");
+    Html.AppendCssFileParts("~/css/admin/helper.css");
+    Html.AppendCssFileParts("~/lib/bootstrap/css/bootstrap.min.css");
+
+    //js
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/js/admin.custom.min.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/sticky-kit-master/dist/sticky-kit.min.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/js/admin.sidebarmenu.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/js/admin.jquery.slimscroll.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/bootstrap/js/bootstrap.min.js");
+    Html.AppendScriptParts(ResourceLocation.Footer, "~/lib/bootstrap/js/popper.min.js");
+    Html.AppendScriptParts("~/lib/jquery/dist/jquery.js");
+
+    var isIe8 = userAgentHelper.IsIe8();
+    if (isIe8)
+    {
+        Html.AddScriptParts(ResourceLocation.Footer, "~/lib/selectivizr.min.js");
+        Html.AddScriptParts(ResourceLocation.Footer, "~/lib/respond.min.js");
+    }
+
+    //page title
+    string adminPageTitle = !string.IsNullOrWhiteSpace(ViewBag.Title) ? ViewBag.Title + " / " : "";
+    adminPageTitle += T("Admin.PageTitle").Text;
+
+    //X-UA-Compatible tag
+    if (commonSettings.RenderXuaCompatible)
+    {
+        Html.AppendHeadCustomParts($"<meta http-equiv=\"X-UA-Compatible\" content=\"{commonSettings.XuaCompatibleValue}\"/>");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>@adminPageTitle</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    @Html.GameHeadCustom()
+    @Html.GameCssFiles(this.Url, ResourceLocation.Head, false)
+    @Html.GameScripts(this.Url, ResourceLocation.Head, false)
+</head>
+<body class="fix-header fix-sidebar">
+    <!-- Preloader - style you can find in spinners.css -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+    <!-- Main wrapper  -->
+    <div id="main-wrapper">
+        @RenderBody()
+    </div>
+    <!-- End Wrapper -->
+
+    @Html.GameCssFiles(this.Url, ResourceLocation.Footer)
+    @Html.GameScripts(this.Url, ResourceLocation.Footer)
+    @Html.GameInlineScripts(this.Url, ResourceLocation.Footer)
+</body>
+</html>

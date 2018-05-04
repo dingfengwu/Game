@@ -1,0 +1,106 @@
+﻿@using Game.Web.Areas.Admin.Models.Customers;
+
+@model CustomerModel
+@{
+    
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12">
+        <div class="card card-outline-info">
+            <div class="card-body">
+                <form method="post" class="form-horizontal" asp-controller="Customer" asp-action="Edit" asp-area="Admin">
+                    <div class="form-body">
+                        <h3 class="box-title m-t-15">客户信息</h3>
+                        <hr class="m-t-0 m-b-40">
+                        @if (ViewData.ModelState.ErrorCount > 0)
+                        {
+                            <div class="alert alert-danger" asp-validation-summary="All">
+                            </div>
+                        }
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-4">用户名</label>
+                                        <div class="col-md-8">
+                                            <input id="txtUsername" class="form-control" type="text" asp-for="@Model.Username" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-4">电话</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" placeholder="" asp-for="@Model.PhoneNumber" />
+                                            <small class="form-control-feedback"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group has-danger row">
+                                        <label class="control-label text-right col-md-4">邮箱</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="txtMatchTime" class="form-control" placeholder="" asp-for="@Model.Email" />
+                                            <small class="form-control-feedback"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-4">姓氏</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="txtFullname" class="form-control" placeholder="" asp-for="@Model.LastName" />
+                                            <small class="form-control-feedback"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                        <!--/row-->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-4">名字</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="txtFullname" class="form-control" placeholder="" asp-for="@Model.FirstName" />
+                                            <small class="form-control-feedback"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label class="control-label text-right col-md-4">居住地址</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="txtFullname" class="form-control" placeholder="" asp-for="@Model.StreetAddress" />
+                                            <small class="form-control-feedback"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/span-->
+                            </div>
+                        <!--/row-->
+                    </div>
+                    <hr>
+                    <input type="hidden" asp-for="@Model.Id" />
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-8">
+                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <a asp-controller="Customer" asp-area="Admin" asp-action="List" class="btn btn-inverse">取消</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

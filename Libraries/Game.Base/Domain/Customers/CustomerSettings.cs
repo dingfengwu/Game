@@ -9,11 +9,6 @@ namespace Game.Base.Domain.Customers
     public class CustomerSettings : ISettings
     {
         /// <summary>
-        /// Gets or sets a value indicating whether usernames are used instead of emails
-        /// </summary>
-        public bool UsernamesEnabled { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether users can check the availability of usernames (when registering or changing in 'My Account')
         /// </summary>
         public bool CheckUsernameAvailabilityEnabled { get; set; }
@@ -122,27 +117,7 @@ namespace Game.Base.Domain.Customers
         /// Customer name formatting
         /// </summary>
         public CustomerNameFormat CustomerNameFormat { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Newsletter' form field is enabled
-        /// </summary>
-        public bool NewsletterEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether 'Newsletter' checkbox is ticked by default on the registration page
-        /// </summary>
-        public bool NewsletterTickedByDefault { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to hide newsletter box
-        /// </summary>
-        public bool HideNewsletterBlock { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether newsletter block should allow to unsubscribe
-        /// </summary>
-        public bool NewsletterBlockAllowToUnsubscribe { get; set; }
-
+        
         /// <summary>
         /// Gets or sets a value indicating the number of minutes for 'online customers' module
         /// </summary>
@@ -273,7 +248,7 @@ namespace Game.Base.Domain.Customers
         /// <summary>
         /// Gets or sets a value indicating whether 'Phone number' is enabled
         /// </summary>
-        public bool PhoneEnabled { get; set; }
+        public bool OtherPhoneEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether 'Phone number' is required

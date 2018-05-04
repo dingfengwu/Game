@@ -41,6 +41,6 @@ namespace Game.Data
         /// 配置dbcontext对象
         /// </summary>
         /// <param name="optionBuilder"></param>
-        void Build(DbContextOptionsBuilder optionBuilder);
+        DbContextOptionsBuilder Build(DbContextOptionsBuilder optionBuilder);
     }
 }

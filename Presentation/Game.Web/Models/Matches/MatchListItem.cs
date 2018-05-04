@@ -10,11 +10,15 @@ namespace Game.Web.Models.Matches
     {
         public int MatchId { get; set; }
 
+        public int GameId { get; set; }
+
         public string GameIcon { get; set; }
 
         public string MatchName { get; set; }
 
-        public DateTime MatchTimeUtc { get; set; }
+        public string MatchType { get; set; }
+
+        public DateTime MatchTimeLocal { get; set; }
 
         public int MasterTeamId { get; set; }
 
@@ -28,9 +32,9 @@ namespace Game.Web.Models.Matches
 
         public string SlaveTeamIcon { get; set; }
 
-        public int MasterTeamScore { get; set; }
+        public decimal MasterTeamScore { get; set; }
 
-        public int SlaveTeamScore { get; set; }
+        public decimal SlaveTeamScore { get; set; }
 
         public decimal MasterTeamRate { get; set; }
 

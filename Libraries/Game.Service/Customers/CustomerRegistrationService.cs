@@ -1,7 +1,9 @@
 using System;
+using System.IO;
 using System.Linq;
 using Game.Base;
 using Game.Base.Domain.Customers;
+using Game.Services.Common;
 using Game.Services.Events;
 using Game.Services.Security;
 
@@ -96,14 +98,17 @@ namespace Game.Services.Customers
         /// <summary>
         /// Validate customer
         /// </summary>
-        /// <param name="usernameOrEmail">Username or email</param>
+        /// <param name="username">Username or email</param>
         /// <param name="password">Password</param>
         /// <returns>Result</returns>
-        public virtual CustomerLoginResults ValidateCustomer(string usernameOrEmail, string password)
+        public virtual CustomerLoginResults ValidateCustomer(string username, string password,out Customer outCustomer)
         {
-            var customer = _customerSettings.UsernamesEnabled ? 
-                _customerService.GetCustomerByUsername(usernameOrEmail) :
-                _customerService.GetCustomerByEmail(usernameOrEmail);
+            outCustomer = null;
+            var customer = _customerService.GetCustomerByUsername(username);
+            if (customer == null)
+                customer = _customerService.GetCustomerByEmail(username);
+            if(customer==null)
+                customer = _customerService.GetCustomerByPhoneNumber(username);
 
             if (customer == null)
                 return CustomerLoginResults.CustomerNotExist;
@@ -142,6 +147,7 @@ namespace Game.Services.Customers
             customer.LastLoginDateUtc = DateTime.UtcNow;
             _customerService.UpdateCustomer(customer);
 
+            outCustomer = customer;
             return CustomerLoginResults.Successful;
         }
 
@@ -189,14 +195,13 @@ namespace Game.Services.Customers
                 result.AddError("密码不能为空");
                 return result;
             }
-            if (_customerSettings.UsernamesEnabled)
+
+            if (string.IsNullOrEmpty(request.Username))
             {
-                if (string.IsNullOrEmpty(request.Username))
-                {
-                    result.AddError("用户名不能为空");
-                    return result;
-                }
+                result.AddError("用户名不能为空");
+                return result;
             }
+
 
             //validate unique user
             if (_customerService.GetCustomerByEmail(request.Email) != null)
@@ -204,14 +209,19 @@ namespace Game.Services.Customers
                 result.AddError("Email地址已经存在");
                 return result;
             }
-            if (_customerSettings.UsernamesEnabled)
+
+            if (_customerService.GetCustomerByUsername(request.Username) != null)
             {
-                if (_customerService.GetCustomerByUsername(request.Username) != null)
-                {
-                    result.AddError("用户名已经存在");
-                    return result;
-                }
+                result.AddError("用户名已经存在");
+                return result;
             }
+
+            if (_customerService.GetCustomerByPhoneNumber(request.PhoneNumber) != null)
+            {
+                result.AddError("手机号码已经存在");
+                return result;
+            }
+
 
             //at this point request is valid
             request.Customer.Username = request.Username;
@@ -226,7 +236,7 @@ namespace Game.Services.Customers
             switch (request.PasswordFormat)
             {
                 case PasswordFormat.Clear:
-                        customerPassword.Password = request.Password;
+                    customerPassword.Password = request.Password;
                     break;
                 case PasswordFormat.Encrypted:
                     customerPassword.Password = _encryptionService.EncryptText(request.Password);
@@ -242,7 +252,7 @@ namespace Game.Services.Customers
             _customerService.InsertCustomerPassword(customerPassword);
 
             request.Customer.Active = request.IsApproved;
-            
+
             //add to 'Registered' role
             var registeredRole = _customerService.GetCustomerRoleBySystemName(SystemCustomerRoleNames.Registered);
             if (registeredRole == null)
@@ -252,7 +262,7 @@ namespace Game.Services.Customers
             var guestRole = request.Customer.CustomerCustomerRoleMapping.FirstOrDefault(cr => cr.CustomerRole.SystemName == SystemCustomerRoleNames.Guests);
             if (guestRole != null)
                 request.Customer.CustomerCustomerRoleMapping.Remove(guestRole);
-            
+
             _customerService.UpdateCustomer(request.Customer);
 
             //publish event
@@ -394,10 +404,7 @@ namespace Game.Services.Customers
         {
             if (customer == null)
                 throw new ArgumentNullException(nameof(customer));
-
-            if (!_customerSettings.UsernamesEnabled)
-                throw new GameException("Usernames are disabled");
-
+            
             newUsername = newUsername.Trim();
 
             if (newUsername.Length > 100)
@@ -410,6 +417,8 @@ namespace Game.Services.Customers
             customer.Username = newUsername;
             _customerService.UpdateCustomer(customer);
         }
+
+        
 
         #endregion
     }

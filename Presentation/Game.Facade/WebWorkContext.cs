@@ -2,11 +2,13 @@
 using System.Linq;
 using Game.Base;
 using Game.Base.Domain.Customers;
+using Game.Base.Domain.Directory;
 using Game.Base.Domain.Localization;
 using Game.Facade.Localization;
 using Game.Services.Authentication;
 using Game.Services.Common;
 using Game.Services.Customers;
+using Game.Services.Directory;
 using Game.Services.Helpers;
 using Game.Services.Localization;
 using Game.Services.Tasks;
@@ -35,10 +37,13 @@ namespace Game.Face
         private readonly LocalizationSettings _localizationSettings;
         private readonly IGenericAttributeService _genericAttributeService;
         private readonly ILanguageService _languageService;
+        private readonly ICurrencyService _currencyService;
+        private readonly CurrencySettings _currencySettings;
 
         private Customer _cachedCustomer;
         private Customer _originalCustomerIfImpersonated;
         private Language _cachedLanguage;
+        private Currency _cachedCurrency;
 
         #endregion
 
@@ -53,7 +58,9 @@ namespace Game.Face
             IUserAgentHelper userAgentHelper,
             IGenericAttributeService genericAttributeService,
             ILanguageService languageService,
-            LocalizationSettings localizationSettings)
+            ICurrencyService currencyService,
+            LocalizationSettings localizationSettings,
+            CurrencySettings currencySettings)
         {
             this._httpContextAccessor = httpContextAccessor;
             this._authenticationService = authenticationService;
@@ -62,6 +69,8 @@ namespace Game.Face
             this._customerService = customerService;
             this._userAgentHelper = userAgentHelper;
             this._localizationSettings = localizationSettings;
+            this._currencyService = currencyService;
+            this._currencySettings = currencySettings;
         }
 
         #endregion
@@ -149,6 +158,69 @@ namespace Game.Face
         #endregion
 
         #region Properties
+
+        /// <summary>
+        /// Gets or sets current user working currency
+        /// </summary>
+        public virtual Currency WorkingCurrency
+        {
+            get
+            {
+                //whether there is a cached value
+                if (_cachedCurrency != null)
+                    return _cachedCurrency;
+
+                //return primary store currency when we're in admin area/mode
+                if (this.IsAdmin)
+                {
+                    var primaryStoreCurrency = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId);
+                    if (primaryStoreCurrency != null)
+                    {
+                        _cachedCurrency = primaryStoreCurrency;
+                        return primaryStoreCurrency;
+                    }
+                }
+
+                //find a currency previously selected by a customer
+                var customerCurrencyId = this.CurrentCustomer.GetAttribute<int>(SystemCustomerAttributeNames.CurrencyId,
+                    _genericAttributeService);
+
+                var allStoreCurrencies = _currencyService.GetAllCurrencies();
+
+                //check customer currency availability
+                var customerCurrency = allStoreCurrencies.FirstOrDefault(currency => currency.Id == customerCurrencyId);
+                if (customerCurrency == null)
+                {
+                    //it not found, then try to get the default currency for the current language (if specified)
+                    customerCurrency = allStoreCurrencies.FirstOrDefault(currency => currency.Id == this.WorkingLanguage.DefaultCurrencyId);
+                }
+
+                //if the default currency for the current store not found, then try to get the first one
+                if (customerCurrency == null)
+                    customerCurrency = allStoreCurrencies.FirstOrDefault();
+
+                //if there are no currencies for the current store try to get the first one regardless of the store
+                if (customerCurrency == null)
+                    customerCurrency = _currencyService.GetAllCurrencies().FirstOrDefault();
+
+                //cache the found currency
+                _cachedCurrency = customerCurrency;
+
+                return _cachedCurrency;
+            }
+            set
+            {
+                //get passed currency identifier
+                var currencyId = value?.Id ?? 0;
+
+                //and save it
+                _genericAttributeService.SaveAttribute(this.CurrentCustomer,
+                    SystemCustomerAttributeNames.CurrencyId, currencyId);
+
+                //then reset the cached value
+                _cachedCurrency = null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the current customer

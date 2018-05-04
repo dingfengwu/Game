@@ -1,0 +1,65 @@
+﻿@using Game.Web.Models.Account
+
+@model SignUpPostModel
+
+
+@{
+    Layout = "_AccountLayout";
+}
+<div class="unix-login">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                <div class="login-content card">
+                    <div class="login-form">
+                        <h4>注册</h4>
+                        <form method="post" asp-antiforgery="true">
+                            @if (ViewData.ModelState.ErrorCount > 0)
+                            {
+                        <div class="alert alert-danger">
+                            @foreach (var item in ViewData.ModelState)
+                            {
+                        <p>
+                            @if (item.Value.Errors.Count > 0)
+                            {
+                                foreach (var error in item.Value.Errors)
+                                {
+                        @error.ErrorMessage
+                        <br />
+                                }
+                            }
+                        </p>
+                            }
+                        </div>
+                            }
+                            <div class="form-group">
+                                <label>用户名</label>
+                                <input type="text" class="form-control" placeholder="" asp-for="@Model.Username">
+                            </div>
+                            <div class="form-group">
+                                <label>邮件地址</label>
+                                <input type="email" class="form-control" placeholder="" asp-for="@Model.Email">
+                            </div>
+                            <div class="form-group">
+                                <label>密码</label>
+                                <input type="password" class="form-control" placeholder="" asp-for="@Model.Password">
+                            </div>
+                            <div class="form-group">
+                                <label>手机号码</label>
+                                <input type="text" class="form-control" placeholder="" asp-for="@Model.Phone">
+                            </div>
+                            <div class="form-group">
+                                <label>姓名</label>
+                                <input type="text" class="form-control" placeholder="" asp-for="@Model.RealName">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-flat m-b-30 m-t-30">确定</button>
+                            <div class="register-link m-t-15 text-center">
+                                <p>已经有帐号 <a asp-controller="Account" asp-action="SignIn" asp-area="Admin">登录</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

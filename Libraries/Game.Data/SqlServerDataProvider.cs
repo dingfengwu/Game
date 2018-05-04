@@ -144,9 +144,12 @@ namespace Game.Data
             return 8000; //for SQL Server 2008 and above HASHBYTES function has a limit of 8000 characters.
         }
         
-        public void Build(DbContextOptionsBuilder optionBuilder)
+        public DbContextOptionsBuilder Build(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer(_settings.DataConnectionString);
+            return optionBuilder.UseSqlServer(_settings.DataConnectionString,options=> {
+                options.EnableRetryOnFailure(3);
+                options.CommandTimeout(10);
+            });
         }
 
         #endregion

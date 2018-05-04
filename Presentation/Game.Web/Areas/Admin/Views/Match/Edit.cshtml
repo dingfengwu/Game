@@ -1,0 +1,188 @@
+﻿@model MatchPostModel
+@{ 
+    var matchService = EngineContext.Current.Resolve<IMatchService>();
+    var allGames = matchService.GetAvailableGames();
+    var allTeams = matchService.GetAvailableTeams();
+}
+
+<div class="row">
+    <div class="col-lg-12 col-sm-12">
+        <div class="card card-outline-info">
+            <div class="card-body">
+                <form method="post" class="form-horizontal" asp-controller="Match" asp-action="Edit" asp-area="admin">
+                    <div class="form-body">
+                        <h3 class="box-title m-t-15">赛事信息</h3>
+                        <hr class="m-t-0 m-b-40">
+                        @if (ViewData.ModelState.ErrorCount > 0)
+                        {
+                            <div class="alert alert-danger" asp-validation-summary="All">
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">游戏名称</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control custom-select" data-placeholder="" tabindex="1" asp-for="@Model.GameId">
+                                            @foreach (var item in allGames)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+    }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4"></label>
+                                    <div class="col-md-8">
+                                        <input id="ckbEnabled" type="checkbox" asp-for="@Model.Enabled" /><label for="ckbEnabled">是否启用竞猜</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">赛事名称</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" asp-for="@Model.MatchName">
+                                        <small class="form-control-feedback"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group has-danger row">
+                                    <label class="control-label text-right col-md-4">比赛时间</label>
+                                    <div class="col-md-8">
+                                        <input type="text" id="txtMatchTime" class="form-control" placeholder="" asp-for="@Model.MatchTimeLocal" asp-format="{0:yyyy-MM-dd HH:mm}">
+                                        <small class="form-control-feedback"></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">主队名称</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control custom-select" data-placeholder="" tabindex="1" asp-for="@Model.MasterTeamId">
+                                            @foreach (var item in allTeams)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+    }
+                                        </select>
+                                        <small class="form-control-feedback">没有看到需要的团队？<a href="javascript:void(0)">新建一个</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">客队名称</label>
+                                    <div class="col-md-8">
+                                        <select class="form-control custom-select" data-placeholder="" tabindex="1" asp-for="@Model.SlaveTeamId">
+                                            @foreach (var item in allTeams)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+    }
+                                        </select>
+                                        <small class="form-control-feedback">没有看到需要的团队？<a href="javascript:void(0)">新建一个</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">主队水位</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" asp-for="@Model.MasterTeamRate">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">客队水位</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" asp-for="@Model.SlaverTeamRate">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">主队比分</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" asp-for="@Model.MasterTeamScore">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-4">客队比分</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" placeholder="" asp-for="@Model.SlaverTeamScore">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">直播地址</label>
+                                    <div class="col-md-10">
+                                        <input type="text" class="form-control" asp-for="@Model.LiveUrl">
+                                        <small class="form-control-feedback">多个地址用分号(;)分隔</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group row">
+                                    <label class="control-label text-right col-md-2">备注</label>
+                                    <div class="col-md-10">
+                                        <textarea class="form-control" rows="5" asp-for="@Model.Memo"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/span-->
+                        </div>
+                        <!--/row-->
+                    </div>
+                    <hr>
+                    <div class="form-actions">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-offset-3 col-md-8">
+                                        <button type="submit" class="btn btn-success">提交</button>
+                                        <a asp-controller="Match" asp-action="List" class="btn btn-inverse">取消</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" asp-location="Footer">
+    $(function () {
+        var today = new Date();
+        var format_td = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        $("#txtMatchTime").datetimepicker({ autoclose: true, language:"zh-CN"});
+    });
+</script>

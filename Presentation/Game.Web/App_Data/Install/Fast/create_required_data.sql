@@ -63,6 +63,17 @@ INSERT [dbo].[Customer_CustomerRole_Mapping] ([CustomerId], [CustomerRoleId]) VA
 INSERT [dbo].[Customer_CustomerRole_Mapping] ([CustomerId], [CustomerRoleId]) VALUES (8, 4)
 GO
 
+SET IDENTITY_INSERT dbo.PermissionRecord ON
+INSERT dbo.PermissionRecord(Id,Name,SystemName,Category) VALUES(1,'Access admin area','AccessAdminPanel','Standard')
+INSERT INTO PermissionRecord(Id,Name,SystemName,Category) VALUES(2,'Admin area. Manage Customers','ManageCustomers','Customers')
+SET IDENTITY_INSERT dbo.PermissionRecord OFF
+GO
+
+INSERT CustomerRole_PermissionRecord_Mapping(CustomerRoleId,PermissionRecordId) VALUES(1,1)
+INSERT CustomerRole_PermissionRecord_Mapping(CustomerRoleId,PermissionRecordId) VALUES(1,2)
+INSERT CustomerRole_PermissionRecord_Mapping(CustomerRoleId,PermissionRecordId) VALUES(5,1)
+GO
+
 
 SET IDENTITY_INSERT [dbo].[Language] ON 
 
@@ -607,3 +618,24 @@ INSERT [dbo].[ScheduleTask] ([Id], [Name], [Seconds], [Type], [Enabled], [StopOn
 INSERT [dbo].[ScheduleTask] ([Id], [Name], [Seconds], [Type], [Enabled], [StopOnError], [LastStartUtc], [LastEndUtc], [LastSuccessUtc]) VALUES (6, N'Update currency exchange rates', 3600, N'Game.Services.Directory.UpdateExchangeRateTask, Game.Services', 1, 0, NULL, NULL, NULL)
 SET IDENTITY_INSERT [dbo].[ScheduleTask] OFF
 GO
+
+
+
+SET IDENTITY_INSERT [dbo].[Currency] ON 
+
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (1, N'US Dollar', N'USD', CAST(1.0000 AS Decimal(18, 4)), N'en-US', N'', 0, 1, 1, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (2, N'Australian Dollar', N'AUD', CAST(1.3600 AS Decimal(18, 4)), N'en-AU', N'', 0, 0, 2, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (3, N'British Pound', N'GBP', CAST(0.8200 AS Decimal(18, 4)), N'en-GB', N'', 0, 0, 3, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (4, N'Canadian Dollar', N'CAD', CAST(1.3200 AS Decimal(18, 4)), N'en-CA', N'', 0, 0, 4, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (5, N'Chinese Yuan Renminbi', N'CNY', CAST(6.9300 AS Decimal(18, 4)), N'zh-CN', N'', 0, 0, 5, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (6, N'Euro', N'EUR', CAST(0.9500 AS Decimal(18, 4)), N'', N'€0.00', 0, 1, 6, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (7, N'Hong Kong Dollar', N'HKD', CAST(7.7500 AS Decimal(18, 4)), N'zh-HK', N'', 0, 0, 7, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (8, N'Japanese Yen', N'JPY', CAST(116.6400 AS Decimal(18, 4)), N'ja-JP', N'', 0, 0, 8, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (9, N'Russian Rouble', N'RUB', CAST(59.7500 AS Decimal(18, 4)), N'ru-RU', N'', 0, 0, 9, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (10, N'Swedish Krona', N'SEK', CAST(9.0800 AS Decimal(18, 4)), N'sv-SE', N'', 0, 0, 10, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 60)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (11, N'Romanian Leu', N'RON', CAST(4.2800 AS Decimal(18, 4)), N'ro-RO', N'', 0, 0, 11, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+INSERT [dbo].[Currency] ([Id], [Name], [CurrencyCode], [Rate], [DisplayLocale], [CustomFormatting], [LimitedToStores], [Published], [DisplayOrder], [CreatedOnUtc], [UpdatedOnUtc], [RoundingTypeId]) VALUES (12, N'Indian Rupee', N'INR', CAST(68.1700 AS Decimal(18, 4)), N'en-IN', N'', 0, 0, 12, CAST(N'2017-10-16T08:37:02.797' AS DateTime), CAST(N'2017-10-16T08:37:02.797' AS DateTime), 0)
+SET IDENTITY_INSERT [dbo].[Currency] OFF
+GO
+
+

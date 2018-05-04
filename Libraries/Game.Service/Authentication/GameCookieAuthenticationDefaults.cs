@@ -25,17 +25,17 @@ namespace Game.Services.Authentication
         /// <summary>
         /// The issuer that should be used for any claims that are created
         /// </summary>
-        public static readonly string ClaimsIssuer = "gameCommerce";
+        public static readonly string ClaimsIssuer = "kkgame";
 
         /// <summary>
         /// The default value for the login path
         /// </summary>
-        public static readonly PathString LoginPath = new PathString("/login");
+        public static readonly PathString LoginPath = new PathString("/admin/account/signin");
 
         /// <summary>
         /// The default value used for the logout path
         /// </summary>
-        public static readonly PathString LogoutPath = new PathString("/logout");
+        public static readonly PathString LogoutPath = new PathString("/admin/account/signout");
 
         /// <summary>
         /// The default value for the access denied path

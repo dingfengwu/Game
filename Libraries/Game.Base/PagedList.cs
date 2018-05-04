@@ -28,6 +28,8 @@ namespace Game.Base
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
+            this.RecordFirstNumber = Math.Min(this.TotalCount, pageIndex * pageSize + 1);
+            this.RecordEndNumber = Math.Min(this.TotalCount, (pageIndex + 1) * pageSize);
             this.AddRange(source.Skip(pageIndex * pageSize).Take(pageSize).ToList());
         }
 
@@ -47,6 +49,8 @@ namespace Game.Base
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
+            this.RecordFirstNumber = Math.Min(this.TotalCount, pageIndex * pageSize + 1);
+            this.RecordEndNumber = Math.Min(this.TotalCount, (pageIndex + 1) * pageSize);
             this.AddRange(source.Skip(pageIndex * pageSize).Take(pageSize).ToList());
         }
 
@@ -67,6 +71,8 @@ namespace Game.Base
 
             this.PageSize = pageSize;
             this.PageIndex = pageIndex;
+            this.RecordFirstNumber = Math.Min(this.TotalCount, pageIndex * pageSize + 1);
+            this.RecordEndNumber = Math.Min(this.TotalCount, (pageIndex + 1) * pageSize);
             this.AddRange(source);
         }
 
@@ -100,5 +106,20 @@ namespace Game.Base
         {
             get { return (PageIndex + 1 < TotalPages); }
         }
+
+        /// <summary>
+        /// 起始记录序号
+        /// </summary>
+        public int RecordFirstNumber { get; }
+
+        /// <summary>
+        /// 终止记录序号
+        /// </summary>
+        public int RecordEndNumber { get; }
+
+        /// <summary>
+        /// 当前页的记录条数
+        /// </summary>
+        public int CurrentPageRecordCount => Math.Min(TotalCount, (RecordEndNumber - RecordFirstNumber + 1));
     }
 }

@@ -192,7 +192,8 @@ namespace Game.Data
         {
             get
             {
-                return this.Entities.AsNoTracking();
+                //TODO:加上AsNoTracking后查询报错
+                return this.Entities;
             }
         }
 

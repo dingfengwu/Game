@@ -1,0 +1,675 @@
+﻿@using Game.Web.Models.Matches
+@using Game.Base.Domain.Matches
+
+@inject IDateTimeHelper dateTimeHelper
+@inject IWorkContext workContext
+@inject IMatchService matchService
+
+@model List<MatchListItem>
+@{
+    var requestGameId = Context.Request.Query["gameId"].ToString().ToUpper();
+    if (string.IsNullOrWhiteSpace(requestGameId))
+    {
+        requestGameId = "0";
+    }
+
+    var games = matchService.GetAvailableGames().OrderBy(p => p.SortIndex).ToList();
+
+}
+
+
+<style type="text/css">
+    /*内容页*/
+    .content {
+        font-size: 1rem;
+        line-height: 3rem;
+        vertical-align: middle;
+        position:relative;
+        padding-bottom:6rem;
+    }
+
+        /*子导航*/
+        .content .sub-nav {
+            background-color: #e3e3e3;
+            height: 3rem;
+        }
+
+            .content .sub-nav li {
+                float: left;
+                padding: 0px 20px;
+                height: inherit;
+            }
+
+                .content .sub-nav li img {
+                    float: left;
+                    margin-top: 10px;
+                    margin-right: 4px;
+                }
+
+                .content .sub-nav li.active {
+                    background-color: #fff;
+                }
+
+        /*比赛列表*/
+        .content .match-list-container .match-item {
+            margin-top: 10px;
+            clear: both;
+            overflow: auto;
+        }
+
+            .content .match-list-container .match-item .match-date {
+                height: 3rem;
+                background-color: #e3e3e3;
+            }
+
+                .content .match-list-container .match-item .match-date span {
+                    display: block;
+                    width: 150px;
+                    height: inherit;
+                    background-color: #fff;
+                    text-align: center;
+                }
+
+            .content .match-list-container .match-item .match-sub-item {
+                display: block;
+                cursor: default;
+                padding: 5px;
+                clear: both;
+                overflow: auto;
+                overflow: overlay;
+                background-color: #fff;
+                border-bottom: solid 1px #ccc;
+                /*-moz-transition: background-color 1s;
+            -webkit-transition: background-color 1s;
+            -o-transition: background-color 1s;*/
+            }
+
+                .content .match-list-container .match-item .match-sub-item > div {
+                    height: 3rem;
+                    line-height: 3rem;
+                    vertical-align: middle;
+                    float: left;
+                    overflow: hidden;
+                }
+                /*.match-sub-item:hover {
+            background-color: #c49f58;
+            color:#fff;
+        }*/
+                .content .match-list-container .match-item .match-sub-item .match-subject img, .content .match-list-container .match-team img {
+                    float: left;
+                    margin-top: 12px;
+                    margin-right: 2px;
+                }
+
+        .content .match-list-container .match-team {
+            width: 320px;
+        }
+
+            .content .match-list-container .match-team > * {
+                float: left;
+            }
+
+        .content .match-list-container .info-item {
+            margin-right: 15px;
+        }
+
+        .content .match-list-container .match-subject {
+            width: 200px;
+            overflow: hidden;
+            padding-left:10px;
+        }
+
+            .master-team-name {
+                float: left;
+                width: 100px;
+                text-align: right;
+                overflow: hidden;
+            }
+
+    .slave-team-name {
+        float: left;
+        width: 100px;
+        text-align: left;
+        overflow: hidden;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .hight-light {
+        color: #ff0000;
+    }
+
+    .match-time {
+        width: 45px;
+        overflow: hidden;
+    }
+
+    .button {
+        display: block;
+        width: 80px;
+    }
+
+    .btn-watch {
+        width: 30px;
+    }
+
+    .btn-guess {
+        background-color: #058025;
+    }
+
+    .btn-stop {
+        background-color: #5f5e5e;
+    }
+
+    .btn-none {
+        background-color: #5f5e5e;
+    }
+
+    .btn-analyze {
+        width: 30px;
+    }
+
+    .btn-more {
+        background-color: #b64343;
+    }
+
+    .btn-guess, .btn-watch, .btn-stop, .btn-none, .btn-analyze, .btn-more {
+        color: #fff;
+        margin-top: 12px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+    }
+
+    .button.active {
+        background-color: #f6a30e;
+    }
+
+    /*固定导航条*/
+    .match-item-header.fixed {
+        position: fixed;
+        top: 0px;
+        margin-top: 0px;
+        margin-bottom: 10px;
+        z-index: 99;
+        border-bottom: solid 1px #ccc;
+    }
+
+    /*回到顶部*/
+    .btn-top {
+        border: solid 1px #d9d9d9;
+        width: 40px;
+        height: 40px;
+        display: block;
+        background-image: url(/images/gotop.png);
+        background-position: 8px 8px;
+        background-repeat: no-repeat;
+        background-size: 24px 24px;
+        background-color: #f7f7f7;
+        line-height: 1rem;
+        font-size: 1rem;
+        padding: 3px;
+    }
+
+        .btn-top span {
+            display: none;
+        }
+
+        .btn-top:hover {
+            background-image: none;
+            color: #c49f58;
+        }
+
+            .btn-top:hover span {
+                display: inline;
+            }
+
+    .fixed-area {
+        position: fixed;
+        top: 90%;
+        left: 50%;
+        margin-left: 500px;
+    }
+    /*列表头部*/
+    .match-item-header {
+        height: 3rem;
+        line-height: 3rem;
+        vertical-align: middle;
+        background-color: #e3e3e3;
+        text-align: center;
+        margin-top: 10px;
+        width: 100%;
+        max-width: 990px;
+    }
+
+        .match-item-header > div {
+            float: left;
+            height: inherit;
+        }
+
+
+    /*底部投注区*/
+    .guess-bar {
+        position: fixed;
+        left: 50%;
+        margin-left: -495px;
+        bottom: 0px;
+        width: 990px;
+        box-shadow: 0px -10px 20px 0px #ccc,0px -5px 20px 0px #ccc;
+        background-color: #fff;
+        font-size: 1rem;
+    }
+
+        .guess-bar .guess-bar-container {
+            height: 6em;
+            vertical-align: middle;
+            padding: 0.5em;
+            overflow:visible;
+        }
+
+            .guess-bar .guess-bar-container .none-selected {
+                font-weight: bold;
+                font-size: 1.5em;
+                padding: 10px;
+                line-height: 4em;
+            }
+
+                .guess-bar .guess-bar-container .none-selected.hide {
+                    display: none;
+                }
+
+            .guess-bar .guess-bar-container .selected-match {
+                display: none;
+                float: left;
+                line-height: 2em;
+                width: 80%;
+                overflow:visible;
+            }
+
+                .guess-bar .guess-bar-container .selected-match .l1 {
+                    height: 3em;
+                    line-height: 3em;
+                }
+
+                .guess-bar .guess-bar-container .selected-match .l2 {
+                    height: 2em;
+                    line-height: 2em;
+                }
+
+                .guess-bar .guess-bar-container .selected-match.active {
+                    display: block;
+                }
+
+                .guess-bar .guess-bar-container .selected-match .bet {
+                    float: left;
+                    width: 150px;
+                }
+
+                    .guess-bar .guess-bar-container .selected-match .bet .l1 {
+                        text-align: center;
+                        background-color: #f8e3e3;
+                        border: solid 1px #edb1b1;
+                    }
+
+                .guess-bar .guess-bar-container .selected-match .bet-amount {
+                    margin-left: 200px;
+                }
+
+            .guess-bar .guess-bar-container .btn.btn-purchase {
+                background-color: #b64343;
+                border-radius: 10px;
+                height: 4em;
+                line-height: 4em;
+                width: 100px;
+                text-align: center;
+                float: right;
+                color: #fff;
+                margin-right: 20px;
+                margin-top: .5em;
+            }
+            .red{color:#ff0000}
+    .guess-bar.is-bottom {
+        position:absolute;
+        left:0px;
+        bottom:0px;
+        margin:0px;
+    }
+    .guess-list-detail{
+        display:none;
+        position:absolute;
+        left:0px;
+        bottom:6rem;
+        background-color:#fff;
+        border:solid #ccc;
+        border-width:1px 1px 0px 0px;
+        line-height:2rem;
+        box-shadow:5px -5px 10px #ccc;
+    }
+        .guess-list-detail .list-header span, .guess-list-detail .list-content span {
+            display: table-cell;
+            text-align: center;
+            width: 120px;
+        }
+        .guess-list-detail .list-header{
+            background-color:#e2dfdf;
+            border-bottom:solid 1px #ccc;
+        }
+        .guess-list-detail .list-header span {
+            font-weight: bold;
+        }
+        .guess-list-detail span.c2{
+            width:250px;
+        }
+        .guess-list-detail span.c3 {
+            width: 80px;
+        }
+            .guess-list-detail span.c3 .highlight {
+                background-color: #f6a30e;
+                color:#fff;
+                padding: 2px 5px;
+            }
+        .guess-list-detail span.c4 {
+            width: 64px;
+        }
+        .guess-list-detail span.c5 {
+            width: 50px;
+        }
+        .guess-list-detail span.c6{
+            width:30px;
+        }
+    .guess-bar .guess-bar-container .selected-match .bet .l1.show-list-detail.show {
+        background-color: #fff;
+        color: initial;
+        border: 0;
+    }
+        .guess-bar .guess-bar-container .selected-match .bet .l1.show-list-detail.show i.fa-caret-down {
+            display: inline !important;
+        }
+        .guess-bar .guess-bar-container .selected-match .bet .l1.show-list-detail.show i.fa-sort-up {
+            display: none !important;
+        }
+</style>
+
+
+<div class="sub-nav">
+    <ul>
+        <li class="@(requestGameId=="0"?"active":"")"><img src="~/images/games/ga.png" width="25" height="25" alt="@T("ALL-MATCH")" /><a href="@Url.Action("List","Match",new { gameId="0"})">@T("ALL-MATCH")</a></li>
+        @foreach (var game in games)
+        {
+        <li class="@(requestGameId ==game.Id.ToString() ? "active" : "")"><a href="@Url.Action("List", "Match", new { gameId = game.Id})"><img src="~/images/games/@game.Icon" width="25" height="25" alt="@game.Name" />@game.Name</a></li>
+        }
+        @*<li><img src="~/images/games/ga.png" width="25" height="25" alt="@T("MORE-MATCH")" /><a href="javascript:void(0)" onclick="showMoreMatch()">@T("MORE-MATCH")</a></li>*@
+    </ul>
+</div>
+<div>
+    <div class="match-header"></div>
+    <div class="match-list-container">
+        <div id="matchItemHeader" class="match-item-header">
+            <div class="match-subject info-item">@T("MatchName")</div>
+            <div class="match-time info-item">@T("MatchTime")</div>
+            <div class="match-team info-item">@T("MatchTeam")</div>
+            <div class="info-item btn-watch">&nbsp;</div>
+            <div class="info-item btn-analyze">&nbsp;</div>
+            <div class="info-item button" style="margin-right:1px;">@T("MasterTeamWin")</div>
+            <div class="info-item button">@T("SlaveTeamWin")</div>
+            <div class="info-item button">&nbsp;</div>
+        </div>
+        @if (Model.Count > 0)
+        {
+            @foreach (var date in Model.GroupBy(p => p.MatchTimeLocal.Date).OrderByDescending(p=>p.Key))
+            {
+                <div class="match-item">
+                    <div class="match-date"><span>@date.Key.FormatForDate(workContext.WorkingLanguage)</span></div>
+                    @foreach (var item in Model.Where(p => p.MatchTimeLocal.Date == date.Key).OrderByDescending(p => p.MatchTimeLocal))
+                    {
+                        <div class="match-sub-item">
+                            <div class="match-subject info-item"><img width="25" height="25" src="@item.GameIcon" alt="@item.MatchName" />@item.MatchName</div>
+                            <div class="match-time info-item">@item.MatchTimeLocal.ToString("HH:mm")</div>
+                            <div class="match-team info-item">
+                                <span class="master-team-name">@item.MasterTeam</span><div><img src="@item.MasterTeamIcon" width="25" height="25" style="margin-right:10px" alt="@item.MasterTeam" /><span class="bold">@item.MasterTeamScore</span></div>
+                                <div class="bold">-</div>
+                                <span class="bold">@item.SlaveTeamScore</span><div><img src="@item.SlaveTeamIcon" width="25" height="25" style="margin-left:10px;" alt="@item.SlaveTeam" /><span class="slave-team-name">@item.SlaveTeam</span></div>
+                            </div>
+                            <div class="info-item watch-game">
+                                <a class="button btn-watch" target="_blank" href="@Url.Action("WatchGame","Game")"><img src="~/images/monitor.png" width="24" height="24" alt="@T("WatchGame")" /></a>
+                            </div>
+                            <div class="info-item">
+                                <a class="button btn-analyze" target="_blank" href="@Url.Action("Analyze", "Game",new {MatchId=item.MatchId})"><img src="~/images/increase.png" width="24" height="24" alt="@T("MatchAnalyze")" /></a>
+                            </div>
+                            @if (item.MatchState == MatchState.Guessing)
+                            {
+                                <div class="info-item" style="margin-right:0px;border-right:solid 1px #fff;">
+                                    <a data-match-id="@item.MatchId" data-team-id="@item.MasterTeamId" class="button btn-guess" href="javascript:void(0)" onclick='addGuess(event,{"matchId":"@item.MatchId","matchName":"@item.MatchName","matchTimeUtc":"@item.MatchTimeLocal","matchTimeAttr":"@date.Key.FormatForDate(workContext.WorkingLanguage)","gameIcon":"@item.GameIcon","matchTeam":"@(string.Format("{0} VS {1}",item.MasterTeam,item.SlaveTeam))","winedTeamAttr":"主队胜","winedRate":"@item.MasterTeamRate","winedTeamId":"@item.MasterTeamId","winedTeamName":"@item.MasterTeam"})'>@item.MasterTeamRate</a>
+                                </div>
+                                <div class="info-item">
+                                    <a data-match-id="@item.MatchId" data-team-id="@item.SlaveTeamId" class="button btn-guess" href="javascript:void(0)" onclick='addGuess(event,{"matchId":"@item.MatchId","matchName":"@item.MatchName","matchTimeUtc":"@item.MatchTimeLocal","matchTimeAttr":"@date.Key.FormatForDate(workContext.WorkingLanguage)","gameIcon":"@item.GameIcon","matchTeam":"@(string.Format("{0} VS {1}",item.MasterTeam,item.SlaveTeam))","winedTeamAttr":"客队胜","winedRate":"@item.SlaveTeamRate","winedTeamId":"@item.SlaveTeamId","winedTeamName":"@item.SlaveTeam"})'>@item.SlaveTeamRate</a>
+                                </div>
+                                <div class="info-item">
+                                    <a class="button btn-more" href="javascript:void(0)">@T("MoreGuess")</a>
+                                </div>
+                            }
+                            else if (item.MatchState == MatchState.StopGuess)
+                            {
+                                <div class="info-item" style="margin-right:0px;border-right:solid 1px #fff;">
+                                    <span class="button btn-stop">@item.MasterTeamRate</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="button btn-stop">@item.SlaveTeamRate</span>
+                                </div>
+                                <div class="info-item">
+                                    <a class="button btn-more" href="javascript:void(0)">@T("MoreGuess")</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="info-item" style="margin-right:0px;border-right:solid 1px #fff;">
+                                    <span class="button btn-none">@T("GuessNone")</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="button">&nbsp;</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="button">&nbsp;</span>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="match-item-none">@T("No-Match-List")</div>
+        }
+    </div>
+</div>
+<div class="fixed-area">
+    <a id="goTop" class="btn-top" href="javascript:void(0);" style="display:none;"><span>@T("GoTop")</span></a>
+</div>
+<div id="guessBar" class="guess-bar">
+    <div class="guess-bar-container">
+        <span id="emptyTotalMatch" class="none-selected">已选<span class="red">0</span>场</span>
+        <div id="selectedTotalMatch" class="selected-match">
+            <div class="bet">
+                <div id="selectedGuessing" class="l1 show-list-detail" style="cursor:pointer">已选择<span id="totalMatch" class="red">1</span>场<i class="fas fa-sort-up" style="margin-left:5px;font-size:30px;color:#fc7979;vertical-align:bottom"></i><i class="fas fa-caret-down" style="display:none;margin-left:5px;font-size:30px;color:#fc7979;vertical-align:bottom"></i></div>
+                <div class="l2"><input type="checkbox" id="lookOwner" /><label for="lookOwner">只看已选场次</label></div>
+            </div>
+            <div class="bet-amount">
+                <div class="l1">投注金额:<span id="guessTotalMoney" class="red">100</span>元</div>
+                <div class="l2">理论奖金范围:<span id="guessingMayWinMoney" class="red">1000~5000</span>元</div>
+            </div>
+        </div>
+        <a class="btn btn-purchase">我要购买</a>
+    </div>
+    <div id="guessListDetail" class="guess-list-detail">
+        <div class="list-header">
+            <span class="c1">日期</span><span class="c2">对阵</span><span class="c3">投注内容</span><span class="c4">水位</span><span class="c5">倍数</span><span class="c6"></span>
+        </div>
+        <div id="guessDetailList" class="list-content">
+            @*<div><span class="c1">10/09 18:50</span><span class="c2">HR VS EnVyUs</span><span class="c3"><label class="highlight">主队胜</label></span><span class="c4">0.98</span><span class="c5"><input value="1" style="width:50px;" /></span><span class="c6" style="cursor:pointer;" title="删除"><i class="fas fa-times-circle"></i></span></div>*@
+        </div>
+        <div class="list-foot">
+            <a id="hideListDetail" href="javascript:void(0);" style="float:right;margin-right:10px;color:#0846c7;">隐藏</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" asp-location="Footer">
+    function scrollHandler() {
+        //固定导航条
+        var elem = $("#matchItemHeader");
+        var bottomElem = $("#guessBar");
+        var top = $(document).scrollTop();
+        var bottom = $(document).height() - top - window.innerHeight;
+        if (top > 140) {
+            elem.addClass("fixed");
+        }
+        else {
+            elem.removeClass("fixed");
+        }
+
+        //固定投注栏
+        if (bottom <= 400) {
+            if (!bottomElem.hasClass("is-bottom")) {
+                bottomElem.addClass("is-bottom");
+            }
+        }
+        else {
+            bottomElem.removeClass("is-bottom");
+        }
+    }
+    function addGuess(e) {
+        var elem = $(e.target);
+        if (elem.hasClass("active")) {
+            elem.removeClass("active");
+            delGuessElement(arguments[1]);
+        }
+        else {
+            elem.addClass("active");
+            addGuessElement(arguments[1]);
+        }
+    }
+    function addGuessElement(data) {
+        //增加节点
+        var elem = $("#guessDetailList");
+        var html = [];
+        html.push('<div class="guessing-item" data-match-id="' + data["matchId"] + '" data-win-teamid="' + data["winedTeamId"] + '">');
+        html.push('<span class="c1">' + data["matchTimeAttr"] + '</span>');
+        html.push('<span class="c2">'+data["matchTeam"]+'</span>');
+        html.push('<span class="c3"><label class="highlight">' + data["winedTeamAttr"] + '</label></span>');
+        html.push('<span class="c4"><label name="rate">' + data["winedRate"] + '</label></span>');
+        html.push('<span class="c5"><input name="scale" value="1" style="width:50px;" /></span>');
+        html.push('<span class="c6" name="delGuessing" style="cursor:pointer;" title="删除"><i class="fas fa-times-circle"></i></span>');
+        html.push("</div>");
+        elem.append(html.join(""));
+        //增加缓存
+        guessListBuff.push({ matchId: data["matchId"], winedTeamId: data["winedTeamId"], number: "1" });
+        //重新计算统计
+        recomputeMoney();
+    }
+    function delGuessElement(data) {
+        var matchId = data["matchId"];
+        var winedTeamId = data["winedTeamId"];
+        delGuessElementById(matchId, winedTeamId);
+    }
+    function recomputeMoney() {
+        var total = 0;
+        var totalMoney = 0;
+        var winTotalMoney = 0;
+        var elem = $("#guessDetailList");
+        elem.find("div").each(function (e) {
+            var scale = $(this).find("input[name='scale']").val() || "0";
+            var rate = $(this).find("label[name='rate']").text() || "0";
+
+            total++;
+            totalMoney += parseInt(scale);
+            winTotalMoney += parseInt(scale) * parseFloat(rate);
+        });
+        winTotalMoney = (winTotalMoney + totalMoney).toFixed(2);
+        totalMoney = totalMoney.toFixed(0);
+        
+        //设置统计
+        $("#totalMatch").text(total);
+        $("#guessTotalMoney").text(totalMoney);
+        $("#guessingMayWinMoney").text(winTotalMoney);
+        //调整相关界面
+        if (total == 0) {
+            $("#emptyTotalMatch").removeClass("hide");
+            $("#selectedTotalMatch").removeClass("active");
+            //如果详情页是打开的，隐藏详情页
+            var buttonElem = $("#selectedGuessing");
+            var show = buttonElem.hasClass("show");
+            if (show) {
+                buttonElem.click();
+            }
+        }
+        else {
+            $("#emptyTotalMatch").addClass("hide");
+            $("#selectedTotalMatch").addClass("active");
+        }
+    }
+    function delGuessElementById(matchId, winedTeamId) {
+        //删除节点
+        var elem = $("#guessDetailList");
+        elem.find('div[data-match-id="' + matchId + '"][data-win-teamid="' + winedTeamId + '"]').remove();
+        //删除缓存
+        for (var i = 0; i < guessListBuff.length; i++) {
+            if (guessListBuff[i]["matchId"] == matchId && guessListBuff[i]["winedTeamId"] == winedTeamId) {
+                guessListBuff.slice(i, 1);
+                break;
+            }
+        }
+        //调用投注按钮的样式
+        var allMatchList = $(".match-sub-item");
+        allMatchList.find('a[data-match-id="' + matchId + '"][data-team-id="' + winedTeamId + '"]').removeClass("active");
+
+        //重新计算统计
+        recomputeMoney();
+    }
+
+
+
+
+
+
+    var guessListBuff = [];
+    $(function () {
+        scrollHandler();
+        $(document).scroll(function (e) {
+            scrollHandler();
+        });
+
+        //回到顶部组件
+        $("#goTop").backTop();
+
+        //绑定事件
+        $("#selectedGuessing").click(function (e) {
+            var currElem = $(this);
+            var targetElem = $("#guessListDetail");
+            var show = currElem.hasClass("show");
+            if (show) {
+                targetElem.hide();
+                currElem.removeClass("show");
+            }
+            else {
+                targetElem.show();
+                currElem.addClass("show");
+            }
+        });
+        $("#hideListDetail").click(function (e) {
+            $("#guessListDetail").hide();
+            $("#selectedGuessing").removeClass("show");
+        });
+        $("#guessDetailList").on("keyup", "input[name=scale]", function (e) {
+            recomputeMoney();
+        });
+        $("#guessDetailList").on("click", "span[name=delGuessing]", function (e) {
+            var parent = $(this).parents("div.guessing-item");
+            var matchId = parent.data("match-id");
+            var winedTeamId = parent.data("win-teamid");
+            delGuessElementById(matchId, winedTeamId);
+        });
+    })
+</script>

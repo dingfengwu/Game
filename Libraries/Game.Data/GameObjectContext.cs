@@ -29,9 +29,11 @@ namespace Game.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //((IObjectContextAdapter) this).ObjectContext.ContextOptions.LazyLoadingEnabled = true;
-
+            
             if (!optionsBuilder.IsConfigured)
-                DataProvider?.Build(optionsBuilder);
+                DataProvider?.Build(optionsBuilder).UseLazyLoadingProxies();
+
+            
         }
 
 

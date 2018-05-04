@@ -184,6 +184,7 @@ namespace Game.Base.Infrastructure
             //set App_Data path as base data directory (required to create and save SQL Server Compact database file in App_Data folder)
             AppDomain.CurrentDomain.SetData("DataDirectory", CommonHelper.MapPath("~/App_Data/"));
 
+            
             return _serviceProvider;
         }
 

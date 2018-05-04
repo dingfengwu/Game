@@ -1,0 +1,14 @@
+﻿@using Game.Web.Models.Account
+
+@model RegisterResultModel
+
+@{ 
+    Layout = "_AccountLayout";
+}
+
+<div class="row">
+    <h4>@Html.Raw(Model.Result)</h4>
+    <div class="col-md-12">
+        进入<a asp-controller="Profile" asp-action="Index" class="btn btn-block">我的后台</a>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 ﻿using Game.Base.Domain.Customers;
+using Game.Base.Domain.Directory;
 using Game.Base.Domain.Localization;
 
 namespace Game.Base
@@ -27,5 +28,10 @@ namespace Game.Base
         /// Gets or sets value indicating whether we're in admin area
         /// </summary>
         Customer OriginalCustomerIfImpersonated { get; }
+
+        /// <summary>
+        /// 获取当前工作的货币
+        /// </summary>
+        Currency WorkingCurrency{get;}
     }
 }

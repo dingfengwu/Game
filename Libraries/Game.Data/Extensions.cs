@@ -24,7 +24,7 @@ namespace Game.Data
         {
             var type = entity is IEntityForCaching ? 
                ((IEntityForCaching) entity).GetType().BaseType :
-               entity.GetType();//待处理...
+               entity.GetType();//TODO:待处理...
             if (type == null)
                 throw new Exception("Original entity type cannot be loaded");
 

@@ -46,6 +46,11 @@ namespace Game.Services.Customers
         public string Username { get; set; }
 
         /// <summary>
+        /// 电话号码
+        /// </summary>
+        public string PhoneNumber { get; set; }
+
+        /// <summary>
         /// Password
         /// </summary>
         public string Password { get; set; }

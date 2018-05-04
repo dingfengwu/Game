@@ -136,9 +136,9 @@ namespace Game.Data
         }
 
 
-        public void Build(DbContextOptionsBuilder optionBuilder)
+        public DbContextOptionsBuilder Build(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlite(_settings.DataConnectionString);
+            return optionBuilder.UseSqlite(_settings.DataConnectionString);
         }
     }
 }

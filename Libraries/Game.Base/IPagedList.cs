@@ -31,5 +31,17 @@ namespace Game.Base
         /// Has next age
         /// </summary>
         bool HasNextPage { get; }
+        /// <summary>
+        /// 当前记录的起始序号,序号从1开始
+        /// </summary>
+        int RecordFirstNumber { get; }
+        /// <summary>
+        /// 当前记录的终止序号,序号从1开始
+        /// </summary>
+        int RecordEndNumber { get;}
+        /// <summary>
+        /// 当前页显示的记录条数
+        /// </summary>
+        int CurrentPageRecordCount { get;}
     }
 }

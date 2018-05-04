@@ -16,8 +16,8 @@ namespace Game.Base.Domain.Security
 
         public int PermissionRecordId { get; set; }
 
-        public CustomerRole CustomerRole { get; set; }
+        public virtual CustomerRole CustomerRole { get; set; }
 
-        public PermissionRecord PermissionRecord { get; set; }
+        public virtual PermissionRecord PermissionRecord { get; set; }
     }
 }

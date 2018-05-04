@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.IO;
 
 namespace Game.Services.Customers
 {
@@ -112,23 +113,7 @@ namespace Game.Services.Customers
         #endregion
 
         #region Utilities
-
-        /// <summary>
-        /// 查询一个客户，包括导航属性
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        public bool IsGuest(int customerId)
-        {
-            var roleMappingRep = EngineContext.Current.Resolve<IRepository<CustomerCustomerRoleMapping>>();
-            var roleRep = EngineContext.Current.Resolve<IRepository<CustomerRole>>();
-            var query = from rm in roleMappingRep.Table
-                        join r in roleRep.Table on rm.CustomerRoleId equals r.Id
-                        where rm.CustomerId == customerId
-                        select r;
-            return query.FirstOrDefault()?.SystemName == SystemCustomerRoleNames.Guests;
-        }
-
+        
         /// <summary>
         /// Delete guest customers using LINQ
         /// </summary>
@@ -485,6 +470,24 @@ namespace Game.Services.Customers
         }
 
         /// <summary>
+        /// Get customer by phone number
+        /// </summary>
+        /// <param name="email">phone number</param>
+        /// <returns>Customer</returns>
+        public virtual Customer GetCustomerByPhoneNumber(string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return null;
+
+            var query = from c in _customerRepository.Table
+                        orderby c.Id
+                        where c.PhoneNumber == phoneNumber
+                        select c;
+            var customer = query.FirstOrDefault();
+            return customer;
+        }
+
+        /// <summary>
         /// Get customer by system name
         /// </summary>
         /// <param name="systemName">System name</param>
@@ -594,8 +597,19 @@ namespace Game.Services.Customers
             return DeleteGuestCustomersUseLinq(createdFromUtc, createdToUtc);
         }
 
+        public string GetUserIconOrDefault(Customer customer)
+        {
+            var image = customer.GetAttribute<string>(SystemCustomerAttributeNames.UserIcon);
+
+            if (image == null)
+                image = "defaultUserIcon.jpg";
+
+            image = Path.Combine("/images/users/", image);
+            return image;
+        }
+
         #endregion
-        
+
         #region Customer roles
 
         /// <summary>

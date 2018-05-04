@@ -7,19 +7,23 @@
   <PropertyGroup>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Test\SampleService.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.6.362" />
     <PackageReference Include="BundlerMinifier.Core" Version="2.6.362" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Https" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.0.2" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.0-preview2-final" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" /><DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.6.362" />
@@ -31,10 +35,15 @@
     <ProjectReference Include="..\Game.Facade\Game.Facade.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Infrastructure\Cache\" />
+    <Folder Include="Test\" />
     <Folder Include="wwwroot\images\game_teams\" />
     <Folder Include="wwwroot\lib\fancybox\" />
     <Folder Include="wwwroot\lib\fonts\ionicons\" />
     <Folder Include="wwwroot\lib\Roxy_Fileman\tmp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\moment\moment.js" />
   </ItemGroup>
 
 </Project>

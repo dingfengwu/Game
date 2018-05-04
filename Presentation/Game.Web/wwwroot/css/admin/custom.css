@@ -1,0 +1,33 @@
+.page-wrapper{
+    padding-bottom:60px;
+    position:relative;
+    transition:all .2s ease;
+}
+.footer{
+    position:absolute;
+    bottom:0px;
+    left:0px;
+}
+.animated-fix {
+    display:block;
+    transform-origin: top right;
+    transform:scale(0);
+    animation-duration: 0.1s;
+    transition: transform .15s cubic-bezier(0.15, 0.81, 0.58, 1),-webkit-transform .15s ease-out;
+}
+.dropdown-menu.show{
+    transform:scale(1);
+}
+.animated-fix1 {
+    display: block;
+    transform-origin: top left;
+    transform: scale(0);
+    animation-duration: 0.1s;
+    transition: transform .15s cubic-bezier(0.15, 0.81, 0.58, 1),-webkit-transform .15s ease-out;
+}
+.left-sidebar{
+    transition: all .2s ease;
+}
+tbody tr td.dataTables_empty{
+    text-align:center;
+}

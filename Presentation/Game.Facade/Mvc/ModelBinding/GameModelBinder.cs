@@ -21,6 +21,7 @@ namespace Game.Facade.Mvc.ModelBinding
         /// <param name="propertyBinders">Property binders</param>
         public GameModelBinder(IDictionary<ModelMetadata, IModelBinder> propertyBinders) : base(propertyBinders)
         {
+            
         }
 
         #endregion
@@ -60,17 +61,24 @@ namespace Game.Facade.Mvc.ModelBinding
             if (bindingContext == null)
                 throw new ArgumentNullException(nameof(bindingContext));
 
-            //trim property string values for game models
-            var valueAsString = bindingResult.Model as string;
-            if (bindingContext.Model is BaseGameModel && !string.IsNullOrEmpty(valueAsString))
+            try
             {
-                //excluding properties with [NoTrim] attribute
-                var noTrim = (propertyMetadata as DefaultModelMetadata)?.Attributes?.Attributes?.OfType<NoTrimAttribute>().Any();
-                if (!noTrim.HasValue || !noTrim.Value)
-                    bindingResult = ModelBindingResult.Success(valueAsString.Trim());
-            }
+                //trim property string values for game models
+                var valueAsString = bindingResult.Model as string;
+                if (bindingContext.Model is BaseGameModel && !string.IsNullOrEmpty(valueAsString))
+                {
+                    //excluding properties with [NoTrim] attribute
+                    var noTrim = (propertyMetadata as DefaultModelMetadata)?.Attributes?.Attributes?.OfType<NoTrimAttribute>().Any();
+                    if (!noTrim.HasValue || !noTrim.Value)
+                        bindingResult = ModelBindingResult.Success(valueAsString.Trim());
+                }
 
-            base.SetProperty(bindingContext, modelName, propertyMetadata, bindingResult);
+                base.SetProperty(bindingContext, modelName, propertyMetadata, bindingResult);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"绑定数据到视图模型出错,字段{modelName}.", ex);
+            }
         }
 
         #endregion

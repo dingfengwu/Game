@@ -19,7 +19,14 @@ namespace Game.Base.Domain.Customers
         /// </summary>
         public Guid CustomerGuid { get; set; }
 
+        /// <summary>
+        /// 管理者对客户的评价
+        /// </summary>
+        public string AdminComment { get; set; }
+
         public string Email { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         public string Username { get; set; }
         
@@ -51,7 +58,7 @@ namespace Game.Base.Domain.Customers
         private ICollection<CustomerCustomerRoleMapping> _customerCustomerRoleMapping;
         public virtual ICollection<CustomerCustomerRoleMapping> CustomerCustomerRoleMapping
         {
-            get { return _customerCustomerRoleMapping ?? (_customerCustomerRoleMapping = new List<CustomerCustomerRoleMapping>()); }
+            get { return _customerCustomerRoleMapping ?? (_customerCustomerRoleMapping = new HashSet<CustomerCustomerRoleMapping>()); }
             protected set { _customerCustomerRoleMapping = value; }
         }
     }

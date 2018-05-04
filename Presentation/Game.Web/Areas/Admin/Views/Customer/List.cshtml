@@ -1,0 +1,109 @@
+﻿@using Game.Base.Domain.Customers
+@using Game.Services.Customers
+
+@model IPagedList<Customer>
+
+@inject IDateTimeHelper dateTimeHelper
+@inject ICustomerService customerService
+
+<h4 class="c-grey-900 mT-10 mB-30">客户列表</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="bgc-white bd bdrs-3">
+            <h4 class="c-grey-900 mB-20 fa-pull-right"><a asp-controller="Match" asp-action="Edit" class="btn btn-primary">新增</a></h4>
+            <table id="matchDataTable" class="table table-striped table-bordered dataTable" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                <thead>
+                    <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending">
+                            用户名
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending">
+                            电话
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Age: activate to sort column ascending">
+                            邮箱
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Age: activate to sort column ascending" >
+                            最后一次活动时间
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Salary: activate to sort column ascending">
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr role="row">
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Position: activate to sort column ascending" >
+                            用户名
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Office: activate to sort column ascending" >
+                            电话
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Age: activate to sort column ascending" >
+                            邮箱
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Age: activate to sort column ascending" >
+                            最后一次活动时间
+                        </th>
+                        <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"
+                            aria-label="Salary: activate to sort column ascending" >
+                            操作
+                        </th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">@item.Username</td>
+                            <td>@item.PhoneNumber</td>
+                            <td>@item.Email</td>
+                            <td>@dateTimeHelper.ConvertToUserTime(item.LastActivityDateUtc).ToString("yyyy-MM-dd HH:mm")</td>
+                            <td><a asp-controller="Customer" asp-action="Edit" asp-area="admin" asp-route-id="@item.Id"><i class="fa fa-pencil-alt"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" asp-location="Footer">
+    $(function () {
+        $("#matchDataTable").DataTable({
+            language: {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            }
+        });
+    });
+</script>

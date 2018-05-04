@@ -25,6 +25,9 @@ namespace Game.Web.Infrastructure
 
             //factories
             builder.RegisterType<CommonModelFactory>().As<ICommonModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<MatchModelFactory>().As<IMatchModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerModelFactory>().As<ICustomerModelFactory>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderModelFactory>().As<IOrderModelFactory>().InstancePerLifetimeScope();
         }
 
         /// <summary>

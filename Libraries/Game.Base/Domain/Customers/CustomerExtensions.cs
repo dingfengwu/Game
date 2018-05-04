@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Game.Base.Domain.Customers
@@ -121,5 +122,6 @@ namespace Game.Base.Domain.Customers
         }
 
         #endregion
+        
     }
 }

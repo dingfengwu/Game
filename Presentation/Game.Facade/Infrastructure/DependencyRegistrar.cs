@@ -8,24 +8,32 @@ using Game.Base.Data;
 using Game.Base.Infrastructure;
 using Game.Base.Infrastructure.DependencyManagement;
 using Game.Data;
+using Game.Data.Extensions;
 using Game.Facade.Mvc.Routing;
 using Game.Facade.Themes;
 using Game.Facade.UI;
 using Game.Services.Authentication;
 using Game.Services.Authentication.External;
+using Game.Services.Catalog;
 using Game.Services.Common;
 using Game.Services.Configuration;
 using Game.Services.Customers;
+using Game.Services.Directory;
 using Game.Services.Events;
 using Game.Services.Helpers;
 using Game.Services.Installation;
 using Game.Services.Localization;
 using Game.Services.Logging;
+using Game.Services.Matches;
+using Game.Services.Orders;
+using Game.Services.Payments;
+using Game.Services.Provider;
 using Game.Services.Security;
 using Game.Services.Seo;
 using Game.Services.Tasks;
 using Game.Services.Themes;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +61,7 @@ namespace Game.Face.Infrastructure
             builder.RegisterType<UserAgentHelper>().As<IUserAgentHelper>().InstancePerLifetimeScope();
 
             //data layer
+            builder.RegisterType<GameCoreConventionSetBuilder>().As<ICoreConventionSetBuilder>().SingleInstance();
             var dataSettingsManager = new DataSettingsManager();
             var dataProviderSettings = dataSettingsManager.LoadSettings();
             builder.Register(c => dataSettingsManager.LoadSettings()).As<DataSettings>();
@@ -106,9 +115,9 @@ namespace Game.Face.Infrastructure
             builder.RegisterType<GenericAttributeService>().As<IGenericAttributeService>().InstancePerLifetimeScope();
             //builder.RegisterType<FulltextService>().As<IFulltextService>().InstancePerLifetimeScope();
             //builder.RegisterType<MaintenanceService>().As<IMaintenanceService>().InstancePerLifetimeScope();
-            //builder.RegisterType<CustomerAttributeFormatter>().As<ICustomerAttributeFormatter>().InstancePerLifetimeScope();
-            //builder.RegisterType<CustomerAttributeParser>().As<ICustomerAttributeParser>().InstancePerLifetimeScope();
-            //builder.RegisterType<CustomerAttributeService>().As<ICustomerAttributeService>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerAttributeFormatter>().As<ICustomerAttributeFormatter>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerAttributeParser>().As<ICustomerAttributeParser>().InstancePerLifetimeScope();
+            builder.RegisterType<CustomerAttributeService>().As<ICustomerAttributeService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerService>().As<ICustomerService>().InstancePerLifetimeScope();
             builder.RegisterType<CustomerRegistrationService>().As<ICustomerRegistrationService>().InstancePerLifetimeScope();
             //builder.RegisterType<CustomerReportService>().As<ICustomerReportService>().InstancePerLifetimeScope();
@@ -146,6 +155,12 @@ namespace Game.Face.Infrastructure
             builder.RegisterType<SettingService>().As<ISettingService>().InstancePerLifetimeScope();
             builder.RegisterType<PageHeadBuilder>().As<IPageHeadBuilder>().InstancePerLifetimeScope();
             builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>().InstancePerLifetimeScope();
+            builder.RegisterType<MatchService>().As<IMatchService>().InstancePerLifetimeScope();
+            builder.RegisterType<EcbExchangeRateProvider>().As<IExchangeRateProvider>().InstancePerLifetimeScope();
+            builder.RegisterType<CurrencyService>().As<ICurrencyService>().InstancePerLifetimeScope();
+            builder.RegisterType<OrderService>().As<IOrderService>().InstancePerLifetimeScope();
+            builder.RegisterType<PaymentService>().As<IPaymentService>().InstancePerLifetimeScope();
+            builder.RegisterType<PriceFormatter>().As<IPriceFormatter>().InstancePerLifetimeScope();
 
             //register all settings
             builder.RegisterSource(new SettingsSource());

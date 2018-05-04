@@ -18,15 +18,13 @@
   <ItemGroup>
     <PackageReference Include="BundlerMinifier.Core" Version="2.6.362" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Redis" Version="0.3.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.1.0-preview2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.0-preview2-final" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.0.0-alpha7-142" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.8.3" />
   </ItemGroup>

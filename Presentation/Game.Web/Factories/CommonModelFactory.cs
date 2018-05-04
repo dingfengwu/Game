@@ -6,10 +6,10 @@ using Game.Facade.Themes;
 using Game.Facade.UI;
 using Game.Services.Common;
 using Game.Services.Customers;
+using Game.Services.Events;
 using Game.Services.Localization;
 using Game.Services.Security;
 using Game.Services.Seo;
-using Game.Web.Infrastructure.Cache;
 using Game.Web.Models.Common;
 using Microsoft.AspNetCore.Hosting;
 using System.Collections.Generic;
@@ -216,8 +216,8 @@ namespace Game.Web.Factories
         public virtual FaviconModel PrepareFaviconModel()
         {
             var model = new FaviconModel();
-            var faviconFileName = "favicon.ico";
-            model.FaviconUrl = _webHelper.GetSiteLocation() + faviconFileName;
+            var faviconFileName = "/favicon.ico";
+            model.FaviconUrl = faviconFileName;
             return model;
         }
 
@@ -376,10 +376,9 @@ namespace Game.Web.Factories
         {
             var customer = _workContext.CurrentCustomer;
             var userIcon = customer.GetAttribute<string>(SystemCustomerAttributeNames.UserIcon);
-            var isGuest = _customerService.IsGuest(customer.Id);
             var model = new SignUpOrInModel()
             {
-                RegisteredUser = !isGuest,
+                RegisteredUser = !customer.IsGuest(),
                 UserId = customer.Id,
                 UserIcon = userIcon
             };

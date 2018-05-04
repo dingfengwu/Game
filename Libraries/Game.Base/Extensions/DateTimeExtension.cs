@@ -1,6 +1,7 @@
 ﻿using Game.Base.Domain.Localization;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Game.Base.Extensions
@@ -11,11 +12,11 @@ namespace Game.Base.Extensions
         {
             if (language.LanguageCulture == "en-US")
             {
-                return @this.ToString("MM/dd ddd");
+                return @this.ToString("MM/dd ddd",CultureInfo.GetCultureInfo("en-US"));
             }
             else if (language.LanguageCulture == "zh-CN")
             {
-                return @this.ToString("MM月dd日 ddd");
+                return @this.ToString("MM月dd日 ddd",CultureInfo.GetCultureInfo("zh-CN"));
             }
             else
             {

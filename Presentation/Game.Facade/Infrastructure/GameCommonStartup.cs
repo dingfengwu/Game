@@ -28,6 +28,8 @@ namespace Game.Face.Infrastructure
         /// <param name="configuration">Configuration root of the application</param>
         public void ConfigureServices(IServiceCollection services, IConfigurationRoot configuration)
         {
+            ProxiesServiceCollectionExtensions.AddEntityFrameworkProxies(services);
+
             //compression
             services.AddResponseCompression(options=> {
                 options.EnableForHttps = true;
@@ -86,14 +88,6 @@ namespace Game.Face.Infrastructure
                     if (!string.IsNullOrEmpty(gameConfig.StaticFilesCacheControl))
                         ctx.Context.Response.Headers.Append(HeaderNames.CacheControl, gameConfig.StaticFilesCacheControl);
                 }
-            });
-
-            //add jpf
-            var newMimeProvider = new FileExtensionContentTypeProvider();
-            newMimeProvider.Mappings[".jpf"] = "image/jp2";
-            application.UseStaticFiles(new StaticFileOptions
-            {
-                ContentTypeProvider = newMimeProvider
             });
 
             //themes

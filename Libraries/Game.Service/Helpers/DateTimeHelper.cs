@@ -169,7 +169,7 @@ namespace Game.Services.Helpers
 
             //default timezone
             if (timeZoneInfo == null)
-                timeZoneInfo = DefaultStoreTimeZone;
+                timeZoneInfo = DefaultPlatformTimeZone;
 
             return timeZoneInfo;
         }
@@ -177,15 +177,15 @@ namespace Game.Services.Helpers
         /// <summary>
         /// Gets or sets a default store time zone
         /// </summary>
-        public virtual TimeZoneInfo DefaultStoreTimeZone
+        public virtual TimeZoneInfo DefaultPlatformTimeZone
         {
             get
             {
                 TimeZoneInfo timeZoneInfo = null;
                 try
                 {
-                    if (!string.IsNullOrEmpty(_dateTimeSettings.DefaultStoreTimeZoneId))
-                        timeZoneInfo = FindTimeZoneById(_dateTimeSettings.DefaultStoreTimeZoneId);
+                    if (!string.IsNullOrEmpty(_dateTimeSettings.DefaultPlatformTimeZoneId))
+                        timeZoneInfo = FindTimeZoneById(_dateTimeSettings.DefaultPlatformTimeZoneId);
                 }
                 catch (Exception exc)
                 {
@@ -205,7 +205,7 @@ namespace Game.Services.Helpers
                     defaultTimeZoneId = value.Id;
                 }
 
-                _dateTimeSettings.DefaultStoreTimeZoneId = defaultTimeZoneId;
+                _dateTimeSettings.DefaultPlatformTimeZoneId = defaultTimeZoneId;
                 _settingService.SaveSetting(_dateTimeSettings);
             }
         }

@@ -10,13 +10,7 @@ namespace Game.Services.Customers
     /// </summary>
     public partial interface ICustomerService
     {
-        #region Customers
-        /// <summary>
-        /// 查询一个客户，包括导航属性
-        /// </summary>
-        /// <param name="customerId"></param>
-        /// <returns></returns>
-        bool IsGuest(int customerId);
+        #region 客户基本操作
 
         /// <summary>
         /// Gets all customers
@@ -90,7 +84,14 @@ namespace Game.Services.Customers
         /// <param name="email">Email</param>
         /// <returns>Customer</returns>
         Customer GetCustomerByEmail(string email);
-        
+
+        /// <summary>
+        /// Get customer by phone number
+        /// </summary>
+        /// <param name="email">phone number</param>
+        /// <returns>Customer</returns>
+        Customer GetCustomerByPhoneNumber(string phoneNumber);
+
         /// <summary>
         /// Get customer by system role
         /// </summary>
@@ -130,6 +131,13 @@ namespace Game.Services.Customers
         /// <param name="createdToUtc">Created date to (UTC); null to load all records</param>
         /// <returns>Number of deleted customers</returns>
         int DeleteGuestCustomers(DateTime? createdFromUtc, DateTime? createdToUtc);
+
+        /// <summary>
+        /// 获取客户配置的图标
+        /// </summary>
+        /// <param name="customer">客户</param>
+        /// <returns></returns>
+        string GetUserIconOrDefault(Customer customer);
 
         #endregion
 
@@ -206,6 +214,8 @@ namespace Game.Services.Customers
         /// </summary>
         /// <param name="customerPassword">Customer password</param>
         void UpdateCustomerPassword(CustomerPassword customerPassword);
+
+        
 
         #endregion
     }
